@@ -1,0 +1,15 @@
+cff-version: 1.1.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Richter Vidal
+    given-names: Fernando
+    orcid: https://orcid.org/0000-0003-4869-2336
+  - family-names: Ivaki
+    given-names: Naghmeh 
+    orcid: https://orcid.org/0000-0001-8376-6711
+  - family-names: Laranjeiro
+    given-names: Nuno 
+    orcid: https://orcid.org/0000-0003-0011-9901
+title: blockchain-dei/openscv: Initial Version
+version: v1
+date-released: 2023-03-23
