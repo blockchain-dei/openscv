@@ -5,8 +5,6 @@ OpenSCV is a taxonomy for smart contract vulnerabilities, proposed in: Vidal FR,
 
 <p>The taxonomy is visually available at https://openscv.dei.uc.pt and a summary is available in the next paragraphs. This repository also contains a dataset holding vulnerable and corrected versions of contracts, for each of the described vulnerabilities.</p>
 
-We traverse the taxonomy tree and present a brief description of all categories and individual vulnerabilities, which are identified according to the respective numbers in Figure 1. In order to keep the used space under reasonable limits, most of the descriptions consist of brief explanations. For further information, the reader may refer to (Vidal et al., 2023c) for further details and also examples. The exception to this is the first vulnerability discussed in the text (i.e., 1.1.1 Unsafe credit transfer), which, for illustrative purposes, we present with complete detail.
-
 <h2>1. Unsafe External Calls</h2>
 <p>This category represents a set of vulnerabilities in which there is an interaction between at least
 two contracts</p>
