@@ -6,50 +6,21 @@ OpenSCV is a taxonomy for smart contract vulnerabilities, proposed in: Vidal FR,
 <p>The taxonomy is visually available at https://openscv.dei.uc.pt and a summary is available in the next paragraphs. This repository also contains a dataset holding vulnerable and corrected versions of contracts, for each of the described vulnerabilities.</p>
 
 <h2>1. Unsafe External Calls</h2>
-<p>This category represents a set of vulnerabilities in which there is an interaction between at least
-two contracts</p>
+<p>This category represents a set of vulnerabilities in which there is an interaction between at least two contracts. It also refers to vulnerabilities related to contracts making non-blockchain external calls, such as calling external web services, calling external libraries, executing external commands, or accessing external files.</p>
 
 
 <h3>1.1 Reentrancy</h3>
-<p>The first subcategory is reentrancy, in which two contracts are involved: the vulnerable contract
-and the malicious contract. Overall, this type of vulnerability occurs when the malicious contract,
-after initiating a call, is allowed to make new calls to the vulnerable contract before the initial call
-has been completed. Thus, unexpected state changes may occur, such as depletion of credit. We
-identified two main types of reentrancy vulnerabilities: one type associated with loss of credit and
-the other one associated with unexpected state changes. This is in line with several vulnerability
-detection tools, such as Securify (Tsankov, 2018), Slither (Slither’s Github, 2019), or (Momeni et al.,
-2019) (Feist et al., 2019) which also distinguish these two cases (although using different names).</p>
+<p>The first subcategory is reentrancy, in which two contracts are involved: the vulnerable contract and the malicious contract. Overall, this type of vulnerability occurs when the malicious contract, after initiating a call, is allowed to make new calls to the vulnerable contract before the initial call has been completed. Thus, unexpected state changes may occur, such as depletion of credit. We identified two types of reentrancy vulnerabilities: one associated with loss of credit and the other associated with unexpected state changes. This is in line with several vulnerability detection tools, such as Securify (Tsankov, 2018), Slither (Slither’s Github, 2019), or (Momeni et al., 2019) (Feist et al., 2019), which also distinguish these two cases (although using different names).</p>
 
 
 <i>1.1.1 Unsafe Credit Transfer</i>
-<p>Known due to the DAO attack event (Siegel, 2016), this vulnerability allows attackers to maliciously
-change balance via credit transfer calls that are allowed to take place before a previous call has
-been completed. Let us consider the case where a smart contract maintains the balance of several
-addresses, allowing the retrieval of funds. A malicious contract may initiate a withdrawal operation
-which would lead the vulnerable contract to send funds to the malicious one before updating the
-balance of the malicious contract. On the malicious contract side, funds would be accepted, and a
-new withdrawal could be initiated (before the balance had been updated on the vulnerable contract
-side). As a consequence, the malicious contract could withdraw funds multiple times, with the total
-sum exceeding its own funds.</p>
+<p>Known due to the DAO attack event \cite{Siegel2016}, this vulnerability allows attackers to maliciously change balance via credit transfer calls that are allowed to take place before a previous call has been completed. Let us consider the case where a smart contract maintains the balance of several addresses, allowing the retrieval of funds. A malicious contract may initiate a withdrawal operation which would lead the vulnerable contract to send funds to the malicious one before updating the balance of the malicious contract. Funds would be accepted on the malicious contract side, and a new withdrawal could be initiated (before the balance had been updated on the vulnerable contract side). As a consequence, the malicious contract could withdraw funds multiple times, with the total sum exceeding its own funds.</p>
 
-<p>Using the Orthogonal Defect Classification (ODC) as a reference, this defect can be classified
-as being of type Algorithm as the nature of the defect sits in the logic created by the programmer.
-The ODC qualifier is defined as wrong as the error is related to incorrect logic (i.e., not missing or
-extraneous logic), related to the order of the instructions in the code.</p>
+<p>Using the Orthogonal Defect Classification (ODC) as a reference, this defect can be classified as being of type Algorithm as the nature of the defect sits in the logic created by the programmer. The ODC qualifier is defined as wrong as the error is related to incorrect logic (i.e., not missing or extraneous logic), related to the order of the instructions in the code.</p>
 
-<p>Regarding the relationship to CWE, we classify this vulnerability (and actually the whole reen-
-trancy group) as CWE-841, which describes a situation where "the software supports a session in
-which more than one behavior must be performed by an actor, but it does not properly ensure that
-the actor performs the behaviors in the required sequence". This vulnerability is also known in the
-literature as "reentrancy" (Kalra et al., 2018; Mavridou Anastasia et al., 2018; Grishchenko et al.,
-2018; Mavridou et al., 2019; Brent et al., 2018; Tsankov et al., 2018; Argañaraz et al., 2020; Ye
-et al., 2020; Tikhomirov et al., 2018; Lu et al., 2019; Liu et al., 2018; Jiang et al., 2018; Rodler
-et al., 2019; Liao et al., 2019; Chen et al., 2020; Ashouri, 2020; Ashraf et al., 2020; Nguyen et al.,
-2020; Luu et al., 2016; Feng et al., 2019; Wang et al., 2019; Feist et al., 2019; Akca et al., 2019;
-Chinen et al., 2020; Andesta et al., 2020; Chapman et al., 2019; Wang et al., 2021; Song Jingjing
-and He et al., 2019; Hu et al., 2023; Bose et al., 2022; Stephens et al., 2021; Choi et al., 2021; Ma
-et al., 2022; Li et al., 2023) , "re-entrancy with balance change" (Momeni et al., 2019) or "SWC-107
-reentrancy" (SmartContractSecurity, 2020).</p>
+<p>Regarding the relationship to CWE, we classify this vulnerability (and actually the whole reentrancy group) as CWE-841, which describes a situation where "the software supports a session in which more than one behavior must be performed by an actor, but it does not properly ensure that the actor performs the behaviors in the required sequence". This vulnerability is also known in the literature as "simple reentrancy" (Li et al., 2022a), "modified reentrancy" (Li et al., 2022a), "reentrancy-eth" (Li et al., 2022d), "cross-function re-entrancy" (Mavridou et al., 2019), "DAO" (Tsankov et al., 2018), "buggy-locked reentrancy" (Li et al., 2022a), "reentrancy vulnerabilities"
+(Chinen et al., 2020), "reentrancy" (Gupta et al., 2022; Sun et al., 2023; Chen et al., 2020; Hwang et al., 2022; Yu et al., 2021; Eshghie et al., 2021; Ashizawa et al., 2021; Zeng et al., 2022; Hu et al., 2023; Xue et al., 2022; Zhang et al., 2022a; Fu et al., 2019; Ma et al., 2022; Wu et al., 2021; Rodler et al., 2019; Bose et al.,2022; Choi et al., 2021; Liao et al., 2022; Zhou et al., 2022b; Mi et al.,2021; Ye et al., 2022; Liu et al., 2021; Zhuang et al., 2020; Ashouri, 2020; Ashraf et al., 2020; Feist
+et al., 2019; Jiang et al., 2018; Kalra et al., 2018; Luu et al., 2016; Wang Zexu and Wen et al., 2021; Mavridou et al., 2019; Nguyen et al., 2020; Stephens et al., 2021; Song et al., 2019; Tikhomirov et al., 2018; Wang et al., 2021, 2019; Xue et al., 2020; Akca et al., 2019; Torres et al., 2021; Zhang et al., 2022c), or "SWC-107 reentrancy" (SmartContractSecurity, 2020).</p>
 
 <i>1.1.2 Unsafe System State Changes</i>
 
@@ -57,10 +28,7 @@ reentrancy" (SmartContractSecurity, 2020).</p>
 is no credit involved and, thus, no impact on users’ funds. Due to the way the contract is coded,
 a call that reaches the vulnerable contract before a previous one has ended may allow an attacker
 to place the program in an unexpected state, leading to various effects, depending on the type of
-contract involved, including performance or availability issues. This vulnerability is also known in
-the literature as "ReentrancyNoETH" (Tsankov et al., 2018), "Reentrancy" (Mavridou Anastasia
-et al., 2018; Mavridou et al., 2019), "Re-entrancy without balance change" (Momeni et al., 2019),
-or "SWC-107 reentrancy" (SmartContractSecurity, 2020).</p>
+contract involved, including performance or availability issues. This vulnerability is also known in the literature as "call to the unknown" (Atzei et al., 2017) or "unexpected function "invocation(Chen et al., 2020).</p>
 
 <h3>1.2 Malicious Fallback Function</h3>
 <p>
@@ -85,12 +53,12 @@ to unexpected behavior.</p>
 execution of a contract. When a smart contract invokes another one, the returned value should be
 verified because the called operation may return an unexpected value (i.e., either because the callee
 is malicious or may just have been poorly coded, resulting in an unexpected result) (Chen et al.,
-2020). This vulnerability is also known in the literature as "Unchecked call return value" (Zheng
-et al., 2021), "Unused return" (Tsankov et al., 2018; Momeni et al., 2019), "Unchecked external call"
-(Tikhomirov et al., 2018), "No check after contract invocation" (Chen et al., 2020), "Call-depth"
-(Liao et al., 2019), "Not checked return values" (Andesta et al., 2020), , "Call-stack Depth Attack"
-(Wang et al., 2021; Song Jingjing and He et al., 2019) or "SWC-104 Unchecked Call Return Value"
-(SmartContractSecurity, 2020).</p>
+2020). This vulnerability is also known in the literature as "call-stack depth attack" (Song et al., 2019;
+Wang et al., 2021), "call depth" (Sun et al., 2023; Zhang et al., 2022a), "no check after contract
+invocation" (Chen et al., 2020), "unchecked call return value" (Zheng et al., 2021), "unchecked
+external call" (Tikhomirov et al., 2018), "unused Return" (Tsankov et al., 2018), "unchecked return
+values" (Fu et al., 2019), or "SWC-104 Unchecked Call Return Value" (SmartContractSecurity,
+2020).</p>
 
 <i>1.3.2 Improper Exception Handling of External Calls</i>
 
@@ -101,17 +69,18 @@ unexpected behavior in the caller contract. There are various reasons why the ca
 exceptional behavior. For instance, the callee could be under malicious control, the execution of the
 transaction could activate a fault in the callee contract, the transaction could be terminated due to
 reaching the gas limit, or the callee contract may have been terminated (e.g., after a software fault
-has been detected in the contract). This vulnerability is also known in the literature as "DoS by
-external contract" (Zhang et al., 2019; Tikhomirov et al., 2018; Lu et al., 2019), "Denial of service"
-(Ashouri, 2020; Andesta et al., 2020) or "SWC-113 DoS with Failed Call" (SmartContractSecurity, 2020).</p>
+has been detected in the contract). This vulnerability is also known in the literature as "denial of
+service (Ashouri, 2020)", "doS by external contract" (Tikhomirov et al., 2018), "dos attack" (Liao
+et al., 2022), "external contract referencing" (Mavridou et al., 2019) or "SWC-113 DoS with Failed
+Call" (SmartContractSecurity, 2020).</p>
 
 
 <i>1.3.3 Improper Check of Low-Level Call Return Value</i>
-<p>
-Languages like Solidity offer the possibility of using low-level calls that operate over raw addresses.
-Such calls do not verify that the code exists or the success of the calls. Thus, its use may lead to
-unexpected behavior (Xi and Pattabiraman, 2023). As a result, using such calls can be risky and should be avoided in most cases. This vulnerability is also known in the literature as "LowLevel-Calls" (Tsankov et al., 2018; Liao et al., 2019), "Unchecked calls" (Feng et al., 2019; Hu et al., 2023),
-"InlineAssembly" (Liao et al., 2019), "Usage of low-level calls" (Momeni et al., 2019), or "Check-effects" (Liao et al., 2019). </p>
+<p>Languages like Solidity offer the possibility of using low-level calls that operate over raw addresses.
+Such calls do not verify that the code exists or the success of the calls. Thus, its use may lead to unexpected behavior (Xi and Pattabiraman, 2023). As a result, using such calls can be risky and should be avoided in most cases. This vulnerability is also known in the literature as "check effects" (Zhang et al., 2022a), "inline assembly" (Zhang et al., 2022a), "low level calls (Tsankov et al., 2018; Zhang et al., 2022a), "unchecked call" (Hu et al., 2023), "unchecked low-level calls" (Hwang et al., 2022), or "low-level-calls" (Li et al., 2022d). </p>
+
+<p>This issue has been addressed in the latest Solidity compiler, version 0.8.20 at the time of writing. If encountered, the compiler provides the following informative warning message: "Warning: Return value of low-level calls not used"</p>
+
 
 <h3>1.4 Improper Locking During External Calls</h3>
 
@@ -130,8 +99,7 @@ to call another contract (or itself) without modifying the state. Starting from 
 view functions must now be called using the code STATICCALL instead of the usual CALL code.
 Consequently, when defining an interface for older contracts, the programmer should only use view
 instead of constant in the case s/he is absolutely sure that the function will work with STATICCALL
-(Solidity, 2023). This vulnerability is also known in the literature as "AssemblyUsage" (Tsankov
-et al., 2018; Momeni et al., 2019).</p>
+(Solidity, 2023). This vulnerability is also known in the literature as "assembly Usage" (Tsankov et al., 2018)</p>
 
 <h3>1.6 Delegatecall to Untrusted Callee</h3>
 
@@ -145,6 +113,33 @@ call" (Tsankov et al., 2018), "Dangerous delegate call" (Jiang et al., 2018; Ash
 2018), "Control-flow Hijack" (Choi et al., 2021), "Delegated call" (Andesta et al., 2020; Li et al.,
 2023; Hu et al., 2023), "Cross Program Invocation" (Cui et al., 2022), "Tainted delegatecall" (Brent
 et al., 2020) or "SWC-112 Delegatecall to Untrusted Callee" (SmartContractSecurity, 2020).</p>
+
+<h3>1.7 Unsafe Non-Blockchain External Call</h3>
+
+<p>This category of vulnerabilities is related to contracts i) making non-blockchain external calls to untrusted third-parties resources like web services and libraries, ii) executing external commands, or iii) accessing external files. These calls or accesses to non-blockchain external resources will cause security issues if different results are returned to each peer node, which consequently will result in inconsistent endorsements</p>
+
+<i>1.7.1 Unsafe External Web Service Call</i>
+
+Sometimes, contracts may opt to streamline the development process and reduce effort by reusing external web services through API calls. Nevertheless, this approach
+can potentially lead to security issues if the returned values vary across different peer nodes. This vulnerability is also known in the literature as "Web service" (Li et al., 2022b).
+
+<i>1.7.2 Unsafe External Library Call</i>
+
+Similar to the previously mentioned vulnerability, contracts might incorporate external libraries without a comprehensive understanding of their internal workings. This vulnerability is also known in the literature as "External Library Calling" (Li et al., 2022b).
+
+<i>1.7.3 Unsafe External Command Execution</i>
+
+External command execution is another possibility within smart contracts. Nevertheless, this action cannot guarantee consistent results across all peer nodes. This vulnerability is also known in the literature as "System Command Execution" (Li et al., 2022b).
+
+<i>1.7.4 Unsafe External File Access</i>
+
+Like external command execution, smart contracts also enable access to external files, but it cannot be assured that the nodes will receive identical results. This vulnerability is also known in the literature as "External File Accessing" (Li et al., 2022b).
+
+<h3>1.8 Cross Channel Invocation</h3>
+
+Certain blockchain platforms like Hyperledger Fabric permit contracts to call each other. How-
+ever, when two contracts interact through different channels, inconsistencies can arise in message
+reception. This vulnerability is known in the literature with the same name (Li et al., 2022b).
 
 
 <h2>2. Mishandled Events</h2>
