@@ -178,7 +178,7 @@ be avoided, e.g., by language constructs.</p>
 <p>This vulnerability is related to using the variables that control the blocks in a blockchain to generate randomness, which is not secure. Such variables may be manipulated by miners so that the randomness is subverted, compromising the security of the blockchain, with its information becoming vulnerable to attacks. In fact, generating a strong enough source of randomness can be very challenging. The use of variables like block.timestamp, blockhash, block.difficulty, and other fields is problematic as these can be manipulated by miners. For example, a miner could select a specific timestamp within a delimited range, or use powerful hardware to mine several blocks quickly, choose the block that would provide an interesting hash, and drop the remaining. This vulnerability is also known in the literature as "bad randomness" (Hu et al., 2023; Crincoli et al., 2022; Ashouri, 2020), "bump Seeds(Cui et al., 2022), "generating randomness" (Gupta et al., 2022), "random
 number generation" (Li et al., 2022b), "use predictable variable" (Zhou et al., 2022b), "predicable variable dependency" (Fu et al., 2019), or "SWC-120 Weak Sources of Randomness from Chain Attributes" (SmartContractSecurity, 2020).</p>
 
-<h3>5.2 Improper Initialization</h3>
+<h3>5.2 Improper Declaration or Initialization</h3>
 
 <p>The smart contract has resources that are either not initialized or initialized incorrectly, leading to unexpected behavior.</p>
 
@@ -280,7 +280,7 @@ In Solidity, it is possible to specify a type for each function. Functions of ty
 <p>This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of writing. If encountered, the compiler provides the following informative warning message: "Warning: Function state mutability can be restricted to pure"</p>
 
 
-<i>Non-Identifiable Order in Map Structure Iteration<i/>
+<i>5.6.7 Non-Identifiable Order in Map Structure Iteration<i/>
 <p> In the Golang language, key-value pairs are not guaranteed to be unique when iterating through a Map structure. This potential lack of uniqueness can cause security issues, particularly if these uncertain values are present in operations that involve modifying the ledger. Such situations may lead to an inconsistent ledger state, which could compromise the ledger’s integrity and reliability. This vulnerability is also known in the literature as "map structure iteration" (Li et al., 2022b)</p>
 
 
@@ -387,7 +387,7 @@ This vulnerability refers to cases where the same name is used for more than one
 <p>This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of writing. If encountered, the compiler provides the following informative warning message: "Warning: This declaration shadows an existing declaration"</p>
 
 
-<h3>5.13 Buffer Overflow</h3>
+<h3>5.13 Buffer-Based Vulnerabilities</h3>
 <p>
 This category refers to buffer-related vulnerabilities (e.g., stack-based, heap-based, bugger overread) in which it is possible to write more data than what the buffer can hold, thus modifying memory areas outside the expected or read the buffer using mechanisms such as indexes or pointers that reference memory locations after the targeted buffer. </p>
 
