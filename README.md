@@ -24,54 +24,26 @@ et al., 2019; Jiang et al., 2018; Kalra et al., 2018; Luu et al., 2016; Wang Zex
 
 <i>1.1.2 Unsafe System State Changes</i>
 
-<p>This vulnerability is similar in nature to v1.1.1, with the main difference being the fact that there
-is no credit involved and, thus, no impact on users’ funds. Due to the way the contract is coded,
-a call that reaches the vulnerable contract before a previous one has ended may allow an attacker
-to place the program in an unexpected state, leading to various effects, depending on the type of
-contract involved, including performance or availability issues. This vulnerability is also known in the literature as "call to the unknown" (Atzei et al., 2017) or "unexpected function "invocation(Chen et al., 2020).</p>
+<p>This vulnerability is similar in nature to v1.1.1, with the main difference being the fact that there is no credit involved and, thus, no impact on users’ funds. Due to the way the contract is coded, a call that reaches the vulnerable contract before a previous one has ended may allow an attacker to place the program in an unexpected state, leading to various effects, depending on the type of contract involved, including performance or availability issues. This vulnerability is also known in the literature as "call to the unknown" (Atzei et al., 2017) or "unexpected function "invocation(Chen et al., 2020).</p>
 
 <h3>1.2 Malicious Fallback Function</h3>
 <p>
-Fallback functions are functions that are executed when a program receives a call to a function whose
-signature does not exist, i.e., either the name does not exist or the parameters do not match the
-parameters of any of the existing functions. For instance, an attacker could deploy a smart contract
-with a malicious fallback function, which could be used to drain funds or alter the system’s state. By mistake, a user could invoke it and reach a state that was not expecting to reach (Chen et al., 2020). This vulnerability is also known in the literature as "Call to the unknown" (Atzei et al., 2017; Argañaraz et al., 2020; Chapman et al., 2019) or "Unexpected function invocation" (Chen et al., 2020).</p>
+Fallback functions are functions that are executed when a program receives a call to a function whose signature does not exist, i.e., either the name does not exist or the parameters do not match the parameters of any of the existing functions. For instance, an attacker could deploy a smart contract with a malicious fallback function, which could be used to drain funds or alter the system’s state. By mistake, a user could invoke it and reach a state that was not expecting to reach (Chen et al., 2020). This vulnerability is also known in the literature as "Call to the unknown" (Atzei et al., 2017; Argañaraz et al., 2020; Chapman et al., 2019) or "Unexpected function invocation" (Chen et al., 2020).</p>
 
 
 <h3>1.3 Improper Check of External Call Result</h3>
 
-<p> This category groups vulnerabilities that verify the execution of external contracts in an improper
-manner (i.e., verification is wrong or even missing), which affects the subsequent logic of the calling
-contract. The result of invoking a certain external operation should be verified, first of all, because
-it may simply fail, but especially because the called operation may be malicious (or may just have
-been poorly coded, resulting in an unexpected result); thus, the direct use of the result may lead
-to unexpected behavior.</p>
+<p> This category groups vulnerabilities that verify the execution of external contracts in an improper manner (i.e., verification is wrong or even missing), which affects the subsequent logic of the calling contract. The result of invoking a certain external operation should be verified, first of all, because it may simply fail, but especially because the called operation may be malicious (or may just have been poorly coded, resulting in an unexpected result); thus, the direct use of the result may lead to unexpected behavior.</p>
 
 <i>1.3.1 Improper Check of External Call Return Value</i>
 
-<p>This defect consists of an incorrect (or missing) verification of the returned value from the external
-execution of a contract. When a smart contract invokes another one, the returned value should be
-verified because the called operation may return an unexpected value (i.e., either because the callee
-is malicious or may just have been poorly coded, resulting in an unexpected result) (Chen et al.,
-2020). This vulnerability is also known in the literature as "call-stack depth attack" (Song et al., 2019;
-Wang et al., 2021), "call depth" (Sun et al., 2023; Zhang et al., 2022a), "no check after contract
-invocation" (Chen et al., 2020), "unchecked call return value" (Zheng et al., 2021), "unchecked
-external call" (Tikhomirov et al., 2018), "unused Return" (Tsankov et al., 2018), "unchecked return
-values" (Fu et al., 2019), or "SWC-104 Unchecked Call Return Value" (SmartContractSecurity,
-2020).</p>
+<p>This defect consists of an incorrect (or missing) verification of the returned value from the external execution of a contract. When a smart contract invokes another one, the returned value should be verified because the called operation may return an unexpected value (i.e., either because the callee is malicious or may just have been poorly coded, resulting in an unexpected result) (Chen et al., 2020). This vulnerability is also known in the literature as "call-stack depth attack" (Song et al., 2019;
+Wang et al., 2021), "call depth" (Sun et al., 2023; Zhang et al., 2022a), "no check after contract invocation" (Chen et al., 2020), "unchecked call return value" (Zheng et al., 2021), "unchecked external call" (Tikhomirov et al., 2018), "unused Return" (Tsankov et al., 2018), "unchecked return values" (Fu et al., 2019), or "SWC-104 Unchecked Call Return Value" (SmartContractSecurity, 2020).</p>
 
 <i>1.3.2 Improper Exception Handling of External Calls</i>
 
-<p>In the case of this defect, the problem resides in the incorrect (or missing) handling of exceptional
-behavior thrown by a call (i.e., instead of residing in the handling of values, as in the case of
-vulnerability v1.3.1 ). The improper verification of exceptions thrown by the callee may lead to
-unexpected behavior in the caller contract. There are various reasons why the callee may exhibit
-exceptional behavior. For instance, the callee could be under malicious control, the execution of the
-transaction could activate a fault in the callee contract, the transaction could be terminated due to
-reaching the gas limit, or the callee contract may have been terminated (e.g., after a software fault
-has been detected in the contract). This vulnerability is also known in the literature as "denial of
-service (Ashouri, 2020)", "doS by external contract" (Tikhomirov et al., 2018), "dos attack" (Liao
-et al., 2022), "external contract referencing" (Mavridou et al., 2019) or "SWC-113 DoS with Failed
+<p>In the case of this defect, the problem resides in the incorrect (or missing) handling of exceptional behavior thrown by a call (i.e., instead of residing in the handling of values, as in the case of vulnerability v1.3.1 ). The improper verification of exceptions thrown by the callee may lead to unexpected behavior in the caller contract. There are various reasons why the callee may exhibit exceptional behavior. For instance, the callee could be under malicious control, the execution of the
+transaction could activate a fault in the callee contract, the transaction could be terminated due to reaching the gas limit, or the callee contract may have been terminated (e.g., after a software fault has been detected in the contract). This vulnerability is also known in the literature as "denial of service (Ashouri, 2020)", "doS by external contract" (Tikhomirov et al., 2018), "dos attack" (Liao et al., 2022), "external contract referencing" (Mavridou et al., 2019) or "SWC-113 DoS with Failed
 Call" (SmartContractSecurity, 2020).</p>
 
 
@@ -84,35 +56,17 @@ Such calls do not verify that the code exists or the success of the calls. Thus,
 
 <h3>1.4 Improper Locking During External Calls</h3>
 
-<p>A vulnerable contract uses a lock mechanism in an erroneous manner, which may cause deadlocks.
-This may result, for instance, in the impossibility of executing transfers and eventually in Denial
-of Service (Mavridou et al., 2019). This vulnerability is also known in the literature as "Deadlock-
-freedom" (Mavridou et al., 2019) or "SWC-132 Unexpected Ether balance"(SmartContractSecurity,
-2020).</p>
+<p>A vulnerable contract uses a lock mechanism in an erroneous manner, which may cause deadlocks. This may result, for instance, in the impossibility of executing transfers and eventually in Denial of Service (Mavridou et al., 2019). This vulnerability is also known in the literature as "Deadlock-freedom" (Mavridou et al., 2019) or "SWC-132 Unexpected Ether balance"(SmartContractSecurity,2020).</p>
 
 <h3>1.5 Interoperability Issues with Other Contracts</h3>
 
-<p> This issue relates to interoperability issues between contracts built in different language versions.
-Newer contracts may execute or inherit discontinued functionality present in older contracts (Khan
-et al., 2021). For instance, Solidity has introduced the operation code STATICCALL to allow a contract
-to call another contract (or itself) without modifying the state. Starting from V0.5.0, pure and
-view functions must now be called using the code STATICCALL instead of the usual CALL code.
-Consequently, when defining an interface for older contracts, the programmer should only use view
-instead of constant in the case s/he is absolutely sure that the function will work with STATICCALL
-(Solidity, 2023). This vulnerability is also known in the literature as "assembly Usage" (Tsankov et al., 2018)</p>
+<p> This issue relates to interoperability issues between contracts built in different language versions. Newer contracts may execute or inherit discontinued functionality present in older contracts (Khan et al., 2021). For instance, Solidity has introduced the operation code STATICCALL to allow a contract
+to call another contract (or itself) without modifying the state. Starting from V0.5.0, pure and view functions must now be called using the code STATICCALL instead of the usual CALL code. Consequently, when defining an interface for older contracts, the programmer should only use view instead of constant in the case s/he is absolutely sure that the function will work with STATICCALL (Solidity, 2023). This vulnerability is also known in the literature as "assembly Usage" (Tsankov et al., 2018)</p>
 
 <h3>1.6 Delegatecall to Untrusted Callee</h3>
 
-<p>Calling untrusted contracts using the delegate feature is generally highly problematic because it
-opens the possibility for the called contract to change sensitive variables (e.g., msg.data or sender)
-of the source contract (Jiang et al., 2018). This type of issue has been most notably known as
-the Parity hack, which allowed attackers to reset the ownership and usage arguments of existing
-user wallets (Krupp and Rossow, 2018). This vulnerability is also known as "Unrestricted delegate
-call" (Tsankov et al., 2018), "Dangerous delegate call" (Jiang et al., 2018; Ashraf et al., 2020),
-"Unchecked delegate call function" (Nguyen et al., 2020), "Code injection" (Krupp and Rossow,
-2018), "Control-flow Hijack" (Choi et al., 2021), "Delegated call" (Andesta et al., 2020; Li et al.,
-2023; Hu et al., 2023), "Cross Program Invocation" (Cui et al., 2022), "Tainted delegatecall" (Brent
-et al., 2020) or "SWC-112 Delegatecall to Untrusted Callee" (SmartContractSecurity, 2020).</p>
+<p>Calling untrusted contracts using the delegate feature is generally highly problematic because it opens the possibility for the called contract to change sensitive variables (e.g., msg.data or sender) of the source contract (Jiang et al., 2018). This type of issue has been most notably known as the Parity hack, which allowed attackers to reset the ownership and usage arguments of existing user wallets (Krupp and Rossow, 2018). This vulnerability is also known as "Unrestricted delegate
+call" (Tsankov et al., 2018), "Dangerous delegate call" (Jiang et al., 2018; Ashraf et al., 2020), "Unchecked delegate call function" (Nguyen et al., 2020), "Code injection" (Krupp and Rossow, 2018), "Control-flow Hijack" (Choi et al., 2021), "Delegated call" (Andesta et al., 2020; Li et al., 2023; Hu et al., 2023), "Cross Program Invocation" (Cui et al., 2022), "Tainted delegatecall" (Brent et al., 2020) or "SWC-112 Delegatecall to Untrusted Callee" (SmartContractSecurity, 2020).</p>
 
 <h3>1.7 Unsafe Non-Blockchain External Call</h3>
 
@@ -137,17 +91,11 @@ Like external command execution, smart contracts also enable access to external 
 
 <h3>1.8 Cross Channel Invocation</h3>
 
-Certain blockchain platforms like Hyperledger Fabric permit contracts to call each other. How-
-ever, when two contracts interact through different channels, inconsistencies can arise in message
-reception. This vulnerability is known in the literature with the same name (Li et al., 2022b).
+Certain blockchain platforms like Hyperledger Fabric permit contracts to call each other. However, when two contracts interact through different channels, inconsistencies can arise in message reception. This vulnerability is known in the literature with the same name (Li et al., 2022b).
 
 
 <h2>2. Mishandled Events</h2>
-<p>This category includes a set of vulnerabilities in which exceptional events are mishandled. In Solidity,
-specific functions can be used to verify if certain conditions exist and throw exceptions in case the
-conditions are not met, namely require and assert. There are, however, fundamental differences.
-When the "require" function returns false, all executed changes are reverted, and all remaining gas
-fees are refunded. When the assert function returns false, it reverts all changes but consumes all
+<p>This category includes a set of vulnerabilities in which exceptional events are mishandled. In Solidity, specific functions can be used to verify if certain conditions exist and throw exceptions in case the conditions are not met, namely require and assert. There are, however, fundamental differences. When the "require" function returns false, all executed changes are reverted, and all remaining gas fees are refunded. When the assert function returns false, it reverts all changes but consumes all
 remaining gas. However, such differences have become a frequent source of problems (Hajdu and Jovanović, 2020).</p>
 
 <h3>2.1 Improper Exceptional Events Handling</h3>
@@ -179,13 +127,7 @@ exception" (Tsankov et al., 2018).</p>
 
 <i>2.2.2 Extraneous Exception Handling</i>
 
-<p>This type of defect refers to the implementation of extra actions compared to what is recommended
-in a certain specification. The specification does not recommend actions like using guard functions
-(e.g., require or assert) in addition to throwing an exception when there is no balance in the caller.
-The extra actions might be arbitrary and incompatible with the purpose of a transfer functionality
-(e.g., returning true or false to report the success of the execution). This vulnerability is also known
-in the literature as "flawed back-end Verification of CEXes" (Ji et al., 2020), "infinite loop" (Liu
-et al., 2021; Zhuang et al., 2020), or "token API violation"(Tikhomirov et al., 2018).</p>
+<p>This type of defect refers to the implementation of extra actions compared to what is recommended in a certain specification. The specification does not recommend actions like using guard functions (e.g., require or assert) in addition to throwing an exception when there is no balance in the caller. The extra actions might be arbitrary and incompatible with the purpose of a transfer functionality (e.g., returning true or false to report the success of the execution). This vulnerability is also known in the literature as "flawed back-end Verification of CEXes" (Ji et al., 2020), "infinite loop" (Liu et al., 2021; Zhuang et al., 2020), or "token API violation"(Tikhomirov et al., 2018).</p>
 
 <h2>3. Gas Depletion</h2>
 
@@ -198,23 +140,14 @@ the smart contract execution.</p>
 
 <h3>3.2 Call with Hardcoded Gas Amount</h3>
 
-<p>This defect refers to the impossibility of adjusting the amount of gas a certain program uses after
-being deployed. This issue is related to the observation that certain transfer credit in real contracts
-was being deployed using a fixed amount of gas (i.e., 2300 gas). If the gas cost of EVM instructions
-changes during, for instance, a hard fork, previously deployed smart contracts will easily break.
-This vulnerability is also known in the literature as "SWC-134 Message call with hardcoded gas
-amount" (SmartContractSecurity, 2020).</p>
+<p>This defect refers to the impossibility of adjusting the amount of gas a certain program uses after being deployed. This issue is related to the observation that certain transfer credit in real contracts was being deployed using a fixed amount of gas (i.e., 2300 gas). If the gas cost of EVM instructions changes during, for instance, a hard fork, previously deployed smart contracts will easily break. This vulnerability is also known in the literature as "SWC-134 Message call with hardcoded gas amount" (SmartContractSecurity, 2020).</p>
 
 <h2>4. Erroneous Credit Transfer</h2>
 
 <p>This category groups defects which are generally related to improper credit transfer operations</p>
 
 <h3>4.1 Improper Check on Transfer Credit</h3>
-<p>This defect refers to the absence of verification (or wrong verification) after a transfer event, which
-can lead to an erroneous vision of the correct balance of the account. Indeed, the balance of the
-account may not reflect the currency transferred in an exact manner, leading to potential errors
-and opening the door to security issues. This vulnerability is also known in the literature as "forged
-transfer notification" (Li et al., 2022c), "unchecked send" (Kalra et al., 2018; Akca et al., 2019;
+<p>This defect refers to the absence of verification (or wrong verification) after a transfer event, which can lead to an erroneous vision of the correct balance of the account. Indeed, the balance of the account may not reflect the currency transferred in an exact manner, leading to potential errors and opening the door to security issues. This vulnerability is also known in the literature as "forged transfer notification" (Li et al., 2022c), "unchecked send" (Kalra et al., 2018; Akca et al., 2019;
 Stephens et al., 2021), or "including Fake EOS transfer" (Li et al., 2022c).</p>
 
 <p>This issue has been addressed in the latest Solidity compiler, version 0.8.20 at the time of writing. If encountered, the compiler provides the following informative warning message: "Warning: Failure condition of send ignored. Consider using transfer instead"</p>
@@ -227,23 +160,13 @@ Stephens et al., 2021), or "including Fake EOS transfer" (Li et al., 2022c).</p>
 <p>Depending on the programming language, there are different ways to carry out credit transfer operations. In Solidity, transfer and send will both allow executing a credit transfer. However, in the case of a problem, transfer will abort the process with an exception, whereas send function will return false, and transaction execution is continued. An attacker may manipulate the send function and be able to continue executing a credit transfer operation without proper authorization. This vulnerability is also known in the literature as "failed send" (Kalra et al., 2018), "send instead of transfer" (Shakya et al., 2022; Tikhomirov et al., 2018)</p>
 
 <h3>4.4 Missing Token Issuer Verification</h3>
-<p>This vulnerability is related to EOSIO blockchain, in which the ‘transfer‘ function allows attackers
-to win the cryptocurrency without paying a ticket fee. This vulnerability is also known in the
-literature as "fake EOS" (Chen et al., 2022)</p>
+<p>This vulnerability is related to EOSIO blockchain, in which the ‘transfer‘ function allows attackers to win the cryptocurrency without paying a ticket fee. This vulnerability is also known in the literature as "fake EOS" (Chen et al., 2022)</p>
 
 <h3>4.5 Missing Token Verification of Exchange</h3>
-<p>This vulnerability arises when an attacker can perform a fake deposit due to inadequate verification
-in the exchange implementation, specifically when unsafe usage of transfer or transferFrom
-functions is present. A potential solution for this issue involves adopting the safeTransferFrom
-function, which incorporates security checks before invoking the transferFrom, thereby mitigating
-the risk. This vulnerability is also known in the literature as "flawed token Verification of DEXes"
-(Ji et al., 2020)</p>
+<p>This vulnerability arises when an attacker can perform a fake deposit due to inadequate verification in the exchange implementation, specifically when unsafe usage of transfer or transferFrom functions is present. A potential solution for this issue involves adopting the safeTransferFrom function, which incorporates security checks before invoking the transferFrom, thereby mitigating the risk. This vulnerability is also known in the literature as "flawed token Verification of DEXes" (Ji et al., 2020)</p>
 
 <h3>4.6 Fake Notification</h3>
-<p>This vulnerability is related to the EOSIO blockchain, specifically in EOS notifications. The problem
-occurs when the attackers forward the notification from eosio.token to the victim and forge an EOS
-notification. This vulnerability is also known in the literature as "fake notification" (Chen et al.,
-2022) or "fake receipt" (He et al., 2021)</p>
+<p>This vulnerability is related to the EOSIO blockchain, specifically in EOS notifications. The problem occurs when the attackers forward the notification from eosio.token to the victim and forge an EOS notification. This vulnerability is also known in the literature as "fake notification" (Chen et al., 2022) or "fake receipt" (He et al., 2021)</p>
   
 <h2>5. Bad Programming Practices and Language Weaknesses</h2>
 
@@ -257,22 +180,16 @@ number generation" (Li et al., 2022b), "use predictable variable" (Zhou et al., 
 
 <h3>5.2 Improper Initialization</h3>
 
-<p>The smart contract has resources that are either not initialized or initialized incorrectly, leading to
-unexpected behavior.</p>
+<p>The smart contract has resources that are either not initialized or initialized incorrectly, leading to unexpected behavior.</p>
 
 <i>5.2.1 Missing Constructor</i>
 
-<p>A smart contract constructor is a function that is executed exactly once during the lifetime of a con-
-tract. It executes at deployment time, initializes state variables, performs a few necessary tasks that
-the specific contract requires, and sets the contract owner. If there is no constructor, the developer
-will have to implement such tasks manually, which is prone to security issues (e.g., variables may be
-set with incorrect values or forgotten, which may result in security problems). This vulnerability is
-also known in the literature as "SWC-118 Incorrect Constructor Name" (SmartContractSecurity, 2020).</p>
+<p>A smart contract constructor is a function that is executed exactly once during the lifetime of a contract. It executes at deployment time, initializes state variables, performs a few necessary tasks that the specific contract requires, and sets the contract owner. If there is no constructor, the developer will have to implement such tasks manually, which is prone to security issues (e.g., variables may be set with incorrect values or forgotten, which may result in security problems). This vulnerability is also known in the literature as "SWC-118 Incorrect Constructor Name" (SmartContractSecurity, 2020).</p>
 
 <i>5.2.2 Wrong Constructor Name</i>
 <p>This vulnerability is related to the contracts that were published without a constructor because the programmer created a function, imagining it would behave like a constructor. Usually, the construction function has sensitive code (e.g., assignment of the owner of the contract), and by declaring a wrong function name, any user can call the function, thus, causing serious security risks. This vulnerability is also known in the literature as "erroneous constructor name" (Hu et al., 2023), "violated access control checks (VACC)" (Ghaleb et al., 2023), or "SWC-118 Incorrect Constructor Name" (SmartContractSecurity, 2020).</p>
 
-<p>  This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of writing. If encountered, the compiler provides the following informative error message: "Error: Functions are not allowed to have the same name as the contract. If you intend this to be a constructor, use constructor(...) ... to define it. Error: Expected identifier but got ()"
+<p> This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of writing. If encountered, the compiler provides the following informative error message: "Error: Functions are not allowed to have the same name as the contract. If you intend this to be a constructor, use constructor(...) ... to define it. Error: Expected identifier but got ()"
 </p>
 
 <i>5.2.3 This defect refers to the lack of initialization of variables that are used throughout the contract. Obviously, the effects can largely vary, depending on the variable itself and on the context in which is being used. This vulnerability is also known in the literature as "golang grammar error" (Li et al., 2022b), "uninitialized variables" (Feist et al., 2019), "uninitialized-local" (Tsankov et al., 2018), or"uninitialized state variable" (Tsankov et al., 2018).</p>
@@ -299,292 +216,188 @@ also known in the literature as "SWC-118 Incorrect Constructor Name" (SmartContr
 
 <i>5.3.2 Dirty Reads</i>
 <p>
-  In the context of HF, a query may return a key value before its update within the same
-transaction. As a consequence, this behavior can lead to unexpected results, as the returned value
-might not reflect the most recent update. This vulnerability is also known in the literature as
-"read-write conflict" (Li et al., 2022b)
+ In the context of HF, a query may return a key value before its update within the same transaction. As a consequence, this behavior can lead to unexpected results, as the returned value might not reflect the most recent update. This vulnerability is also known in the literature as "read-write conflict" (Li et al., 2022b)
 </p>
 
 <h3>5.4 Error in Function Call</h3>
 <p>
-In a blockchain context, each function in a smart contract is identified by its name, input parameters,
-and output parameters. Thus, these items compose the function signature, which is used by the
-contracts to verify that the right function is being called. This category groups defects in which a
-developer uses a function in the wrong manner: either a wrong signature is used, wrong arguments
-are used, or a wrong function is called. </p>
+In a blockchain context, each function in a smart contract is identified by its name, input parameters, and output parameters. Thus, these items compose the function signature, which is used by the contracts to verify that the right function is being called. This category groups defects in which a developer uses a function in the wrong manner: either a wrong signature is used, wrong arguments are used, or a wrong function is called. </p>
 
 <i>5.4.1 Wrong Function Call</i>
 <p>
-The issue occurs when a contract executes a certain function at a wrong address, i.e., at the address
-used by another function, which, however, has the same signature as the intended function. This
-vulnerability is also known in the literature as "type casts" (Atzei et al., 2017).</p>
+The issue occurs when a contract executes a certain function at a wrong address, i.e., at the address used by another function, which, however, has the same signature as the intended function. This vulnerability is also known in the literature as "type casts" (Atzei et al., 2017).</p>
 
 <i>5.4.2 Wrong Selection of Guard Function</i>
 <p>
-Assert is a Solidity function, which is recommended to be used only in the development phase.
-Intentionally, the programmer inserts the function at a specific point in the program where a bug
-is suspected. If running the program results in gas depletion, the suspicion is confirmed.
-Thus, this defect refers to the cases in which the assert function is implemented with the wrong
-purpose, not having the expected effect. In more severe cases, in which the programmer forgets to
-remove it from the code or does not replace it with require, the impact of this defect can be serious.
-This vulnerability is also known in the literature as "assert fail" (Zhang et al., 2022a), "assertion
-failure" (Choi et al., 2021; Torres et al., 2021), "assertion violation" (Sunbeom et al., 2021), or
-"SWC-110 Assert Violation" (SmartContractSecurity, 2020).</p>
+Assert is a Solidity function, which is recommended to be used only in the development phase. Intentionally, the programmer inserts the function at a specific point in the program where a bug is suspected. If running the program results in gas depletion, the suspicion is confirmed. Thus, this defect refers to the cases in which the assert function is implemented with the wrong purpose, not having the expected effect. In more severe cases, in which the programmer forgets to remove it from the code or does not replace it with require, the impact of this defect can be serious. This vulnerability is also known in the literature as "assert fail" (Zhang et al., 2022a), "assertion failure" (Choi et al., 2021; Torres et al., 2021), "assertion violation" (Sunbeom et al., 2021), or "SWC-110 Assert Violation" (SmartContractSecurity, 2020).</p>
 
 
 <i>5.4.3 Function Call with Wrong Arguments</i>
-<p>This defect refers to the presence of certain control characters within the arguments of a function
-call, namely the right-to-left override control character, which can cause the function to execute
-with arguments in reverse order. This is a known issue also in other computing areas (Yosifova
-and Bontchev, 2021). This vulnerability is also known in the literature as "right to left override"
-(Tsankov et al., 2018), "rtlo" (Li et al., 2022d), or "SWC-130 Right-To-Left-Override control char-
-acter (U+202E)"</p>
+<p>This defect refers to the presence of certain control characters within the arguments of a function call, namely the right-to-left override control character, which can cause the function to execute with arguments in reverse order. This is a known issue also in other computing areas (Yosifova and Bontchev, 2021). This vulnerability is also known in the literature as "right to left override" (Tsankov et al., 2018), "rtlo" (Li et al., 2022d), or "SWC-130 Right-To-Left-Override control character (U+202E)"</p>
 
-<p>This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of
-writing. Now, if encountered, the compiler provides the following informative error message: "Error:
-Mismatching directional override markers in a comment or string literal"</p>
-<h3>4.5 Wrong Class Inheritance Order</h3>
-<p>
+<p>This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of writing. Now, if encountered, the compiler provides the following informative error message: "Error: Mismatching directional override markers in a comment or string literal"</p>
+
 
 <h3>5.5 Wrong Class Inheritance Order </h3>
-<p>Contracts may have inheritance relationships with other contracts. In the case of solidity, the code
-of the inherited contract is always executed first, e.g., so that state variables are initialized properly.
-Solidity uses an algorithm named C3 linearization to determine the order in which the contracts are
-to be executed. Developers specify the inheritance relationships in a inherit statement and may
-believe that the order in which the inherited contracts are specified in that statement reflects the
-order in which the linearization algorithm should work. This opens space for security issues due to
-the wrong order of the contract in the inherit statement. This vulnerability is also known in the
-literature as "SWC-125 Incorrect Inheritance Order"(SmartContractSecurity, 2020).</p>
-<p> This issue has been addressed in the latest Solidity compiler, version 0.8.20 at the time of writing.
-Now, if encountered, the compiler provides the following informative error message: "Error: Derived
-contract must override function "validPurchase". Two or more base classes define a function with
-same name and parameter types".</p>
+<p>Contracts may have inheritance relationships with other contracts. In the case of solidity, the code of the inherited contract is always executed first, e.g., so that state variables are initialized properly. Solidity uses an algorithm named C3 linearization to determine the order in which the contracts are to be executed. Developers specify the inheritance relationships in a inherit statement and may believe that the order in which the inherited contracts are specified in that statement reflects the
+order in which the linearization algorithm should work. This opens space for security issues due to the wrong order of the contract in the inherit statement. This vulnerability is also known in the literature as "SWC-125 Incorrect Inheritance Order"(SmartContractSecurity, 2020).</p>
 
-<h3>4.6 Improper Type Usage</h3>
-<p>This category groups vulnerabilities in which there is some misuse of types of data structures or
-functions.</p>
+<p> This issue has been addressed in the latest Solidity compiler, version 0.8.20 at the time of writing. Now, if encountered, the compiler provides the following informative error message: "Error: Derived contract must override function "validPurchase". Two or more base classes define a function with same name and parameter types".</p>
 
-<i>4.6.1 Missing return type on Function</i>
+<h3>5.6 Improper Type Usage</h3>
+<p>This category groups vulnerabilities in which there is some misuse of types of data structures or functions.</p>
+
+<i>5.6.1 Missing return type on Function</i>
 <p>
-This vulnerability refers to a missing return type in the definition of a smart contract interface. At
-runtime, if a contract that implements that interface contains two functions with the same name
-and arguments but have different return types, there is a chance that the wrong function will be
-called. This may lead to unexpected results once the calling contract receives the wrong data type
-(Zhang et al., 2019). This vulnerability is also known in the literature as "ERC20Interface"(Tsankov
-et al., 2018), "Unsafe inherit from token" (Lu et al., 2019), "Missing Return Statement" (Hu et al.,
-2023) or "Incorrect ERC20 interface" (Momeni et al., 2019).</p>
+This vulnerability refers to a missing return type in the definition of a smart contract interface. At runtime, if a contract that implements that interface contains two functions with the same name and arguments but have different return types, there is a chance that the wrong function will be called. This may lead to unexpected results once the calling contract receives the wrong data type (Zhang et al., 2019). This vulnerability is also known in the literature as "ERC 20 standard Violation" (Sunbeom et al., 2021), "ERC20 Interface" (Tsankov et al., 2018), or "missing return statement" (Hu et al., 2023).</p>
 
-<i>4.6.2 Function Return Type Mismatch</i>
+<p>This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of writing. If encountered, the compiler provides the following informative error message: "Error: Overriding function return types differ"</p>
 
-<p>In this case, the developer implemented a function (starting from an interface), but it selected the
-wrong data type for the value to be returned (i.e., it differs from what is specified in the interface).
-This vulnerability is known in the literature in the context of non-fungible tokens by the name
-of "ERC721Interface" (Tsankov et al., 2018) or "SWC-127 Arbitrary Jump with Function Type
-Variable" (SmartContractSecurity, 2020).</p>
+<i>5.6.2 Function Return Type Mismatch</i>
+
+<p>In this case, the developer implemented a function (starting from an interface), but it selected the wrong data type for the value to be returned (i.e., it differs from what is specified in the interface). This vulnerability is known in the literature in the context of non-fungible tokens by the name of "ERC721 Interface" (Tsankov et al., 2018) or "SWC-127 Arbitrary Jump with Function Type Variable" (SmartContractSecurity, 2020).</p>
 
 
-<i>4.6.3 Parameter Type Mismatch</i>
-<p> This issue refers to a divergence regarding the types of arguments used in a function that implements
-an interface. In this situation, even if the call is done with the right function name and arguments,
-the EVM considers it to be a non-existent function error. This vulnerability is also known in the
-literature as "Types conversion" (Argañaraz et al., 2020), "Unindexed ERC20 event parameters"
-(Momeni et al., 2019) or "ERC20Indexed" (Tsankov et al., 2018) in the context of fungible tokens. </p>
+<i>5.6.3 Parameter Type Mismatch</i>
+<p>This issue refers to a divergence regarding the types of arguments used in a function that implements an interface. In this situation, even if the call is done with the right function name and arguments, the EVM considers it to be a non-existent function error. This vulnerability is also known in the literature as "ERC20 Indexed" (Tsankov et al., 2018) in the context of fungible tokens. </p>
 
-<i>4.6.4 Missing Type in Variable Declaration</i>
+<i>5.6.4 Missing Type in Variable Declaration</i>
 
-<p>In Solidity, whenever a variable is declared without an associated type, the compiler infers the data
-type based on the assigned value. This additional computation may lead to higher costs (i.e., in gas)
-and memory usage and especially allows for overflow or underflow problems to occur. For instance,
-the compiler may infer that a signed integer is the right datatype for a certain variable, where an
-unsigned integer should be used. This vulnerability is also known in the literature as "Unsafe type
-inference" (Zhang et al., 2019; Tikhomirov et al., 2018) or "Unsafe-type declaration" (Lu et al.,
-2019). </p>
+<p>n Solidity, the compiler infers the data type based on the assigned value whenever a variable is declared without an associated type. This additional computation may lead to higher costs (i.e., in gas) and memory usage and especially allows for overflow or underflow problems to occur. For instance, the compiler may infer that a signed integer is the right datatype for a certain variable, where an unsigned integer should be used. This vulnerability is also known in the literature as "unsafe type inference" (Tikhomirov et al., 2018). </p>
 
-<i>4.6.5 Wrong Type in Variable Declaration</i>
+<p>This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of
+writing. If encountered, the compiler provides the following informative error message: "Error:
+Expected primary expression."</p>
+
+<i>5.6.5 Wrong Type in Variable Declaration</i>
 <p>
-This issue refers to a wrong selection of datatypes that leads to the allocation of more memory than
-what would be necessary for the intended function, leading to an increase in gas consumption. As
-an example, in Solidity, the byte[] type reserves 31 bytes of space for each element, whereas the
-bytes requires a single byte per element, thus being more space efficient. This vulnerability is also
-known in the literature as "byte[ ]" (Zhang et al., 2019), "Byte array" (Tikhomirov et al., 2018),
-or "Costly bytes" (Lu et al., 2019).</p>
+This issue refers to a wrong selection of datatypes that leads to the allocation of more memory than what would be necessary for the intended function, leading to an increase in gas consumption. As an example, in Solidity, the byte[] type reserves 31 bytes of space for each element, whereas the bytes requires a single byte per element, thus being more space efficient. This vulnerability is also known in the literature as "byte array" (Tikhomirov et al., 2018), "global variable" (Li et al., 2022b), "type conversion errors" (Ding et al., 2021), or "unsafe array’s length manipulation" (Shakya et al., 2022).</p>
 
-<i>4.6.6 Wrong Type of Function</i>
+<i>5.6.6 Wrong Type of Function</i>
 <p>
-In Solidity, it is possible to specify a type for each function. Functions of type view can read data
-from state variables but cannot modify them, and no gas costs are involved, whereas functions of
-type pure neither can read nor modify state variables and similarly to view functions, no gas costs
-are associated with this type of function. This vulnerability occurs when a developer uses the wrong
-type for a function. For instance, there is an issue reported in Ethereum’s GitHub (Ethereum’s
-Github, 2022) in which a state variable conversion operation (from storage to memory) inside a
-pure function results in a problem (i.e., to avoid this problem, the function type should be view).
-This vulnerability is also known in the literature as "Function type operators" (Chapman et al.,
-2019). </p>
+In Solidity, it is possible to specify a type for each function. Functions of type view can read data from state variables but cannot modify them, and no gas costs are involved, whereas functions of type pure neither can read nor modify state variables and similarly to view functions, no gas costs are associated with this type of function. This vulnerability occurs when a developer uses the wrong type for a function. For instance, there is an issue reported in Ethereum’s GitHub (Ethereum’s Github, 2022) in which a state variable conversion operation (from storage to memory) inside a pure function results in a problem (i.e., to avoid this problem, the function type should be view).This vulnerability is also known in the literature as "unsafe type inference" (Tikhomirov et al.,2018) </p>
 
-<h3>4.7 Useless Code</h3>
+<p>This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of writing. If encountered, the compiler provides the following informative warning message: "Warning: Function state mutability can be restricted to pure"</p>
+
+
+<i>Non-Identifiable Order in Map Structure Iteration<i/>
+<p> In the Golang language, key-value pairs are not guaranteed to be unique when iterating through a Map structure. This potential lack of uniqueness can cause security issues, particularly if these uncertain values are present in operations that involve modifying the ledger. Such situations may lead to an inconsistent ledger state, which could compromise the ledger’s integrity and reliability. This vulnerability is also known in the literature as "map structure iteration" (Li et al., 2022b)</p>
+
+
+<h3>5.7 Useless Code</h3>
 <p>
 This category groups a set of vulnerabilities in which the program contains a unit of code that, in
 practice, has no effect. </p>
 
 
-<i>4.7.1 Unreachable Payable Function</i>
-<p> This defect refers to the case of contracts that allow the use of functions that accept credit but do
-not have any functionality for transacting it. They are insecure, as there is no way to recover the
-credit once it has been sent to the contract (Zhang et al., 2019). This vulnerability is also known in
-the literature as "Locked Ether" (Chapman et al., 2019; Ashouri, 2020; Feist et al., 2019; Tsankov
-et al., 2018), "Lost ether in the transactions" (Argañaraz et al., 2020), "Locked Money" (Zhang
-et al., 2019; Tikhomirov et al., 2018; Lu et al., 2019), "Frozen Ether" (Hu et al., 2023), "Freezing
-Ether" (Nguyen et al., 2020; Choi et al., 2021; Jiang et al., 2018; Ashraf et al., 2020), "Be no
-black hole" (Chang et al., 2019), "Function Can/Cannot Receive Ether" (Chapman et al., 2019),
-"Locked Funds" (Stephens et al., 2021), "Leaking Ether to Arbitraty Address" (Hu et al., 2023) or
-"Contracts that lock ether" (Momeni et al., 2019). </p>
+<i>5.7.1 Unreachable Payable Function</i>
+<p> This defect refers to the case of contracts that allow the use of functions that accept credit but do not have any functionality for transacting it. They are insecure, as there is no way to recover the credit once it has been sent to the contract (Zhang et al., 2019). This vulnerability is also known in the literature as "Locked Ether" (Chapman et al., 2019; Ashouri, 2020; Feist et al., 2019; Tsankov et al., 2018), "Lost ether in the transactions" (Argañaraz et al., 2020), "Locked Money" (Zhang et al., 2019; Tikhomirov et al., 2018; Lu et al., 2019), "Frozen Ether" (Hu et al., 2023), "Freezing Ether" (Nguyen et al., 2020; Choi et al., 2021; Jiang et al., 2018; Ashraf et al., 2020), "Be no black hole" (Chang et al., 2019), "Function Can/Cannot Receive Ether" (Chapman et al., 2019), "Locked Funds" (Stephens et al., 2021), "Leaking Ether to Arbitraty Address" (Hu et al., 2023) or "Contracts that lock ether" (Momeni et al., 2019). </p>
 
-<i>4.7.2 No Effect Code Execution</i>
+<p>This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of
+writing. If encountered, the compiler provides the following informative warning message: "Warning:
+This function is named receive but is not the receive function of the contract. If you intend this to
+be a receive function, use receive(...) ... without the function keyword to define it"</p>
 
-<p>This vulnerability refers to the presence of code that has no practical purpose (i.e., it has no effect
-on the intended functionality). Within a smart contract, it increases the size of the program’s binary
-code, which results in more gas consumption than would otherwise be necessary. This vulnerability
-is also known in the literature as "CallToDefaultConstructor" (Tsankov et al., 2018), "Useless
-Assignment" (Hu et al., 2023) or "SWC-135 Code With No Effects" (SmartContractSecurity, 2020).</p>
+<i>5.7.2 No Effect Code Execution</i>
 
-<i>4.7.3 Unused Variables</i>
+<p>This vulnerability refers to the presence of code that has no practical purpose (i.e., it has no effect on the intended functionality). Within a smart contract, it increases the size of the program’s binary code, which results in more gas consumption than would otherwise be necessary. This vulnerability is also known in the literature as "call to default constructor" (Tsankov et al., 2018), "dead code" (Chen et al., 2021), "useless assignment(Hu et al., 2023)", "code-no-effects" (Li et al., 2022d), or "SWC-135 Code With No Effects" (SmartContractSecurity, 2020).</p>
+
+<i>5.7.3 Unused Variables</i>
 <p>
-This defect refers to the declaration of variables that are not used in the contract, which results
-directly in the allocation of unnecessary space in memory. As a consequence, the gas cost of exe-
-cuting the contract increases as well as the attack surface of the contract. Other effects are related
-to the readability or maintainability of the code. This vulnerability is also known in the literature
-as "UnusedStateVariable" (Tsankov et al., 2018; Hu et al., 2023), "Presence of unused variables"
-(SmartContractSecurity, 2020) or "SWC-131 Presence of unused variables" (SmartContractSecu-
-rity, 2020). </p>
+This defect refers to the declaration of variables that are not used in the contract, which results directly in the allocation of unnecessary space in memory. As a consequence, the gas cost of executing the contract increases as well as the attack surface of the contract. Other effects are related to the readability or maintainability of the code. This vulnerability is also known in the literature as "redundant sstore" (Chen et al., 2021), "unused state variable" (Hu et al., 2023), "unused State Variable" (Tsankov et al., 2018), or "SWC-131 Presence of unused variables" (SmartContractSecurity, 2020). </p>
 
-<h3>4.8 Version Issues</h3>
+<p>This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of writing. If encountered, the compiler provides the following informative warning message: "Warning: Unused local variable. Warning: Unused function parameter. Remove or comment out the variable name to silence this warning"</p>
+
+
+<i>5.7.4 Inefficient Operation Sequence</i>
+
+<p> 
+  Due to bad programming practices or outdated compilers (i.e., Solidity has more than 350 versions, with the first one being 0.1.1 released in 2015), smart contracts may suffer from gas-inefficient operation sequences. Consequently, such contracts could be deployed with non-optimized bytecode, leading to increased resource and gas consumption. This vulnerability is also known in the literature as "SWAP1=DUP2=SWAP1" (Chen et al., 2021), "PUSHx=POP" (Chen et al., 2021), or"PUSH1=NOT" (Chen et al., 2021) </p>
+
+
+<h3>5.8 Version Issues</h3>
 <p>
-This category refers to issues that relate to the versioning of various aspects, including the use of
-deprecated versions of functions. </p>
+This category refers to issues that relate to the versioning of various aspects, including the use of deprecated versions of functions. </p>
 
-<i>4.8.1 Undetermined Program Version Prevalence</i>
+<i>5.8.1 Undetermined Program Version Prevalence</i>
 
-<p>This defect refers to the case where the developer allows a certain contract to be compiled across
-multiple versions. This allows the known faults in older versions to be easily activated. (Zhang
-et al., 2019). This vulnerability is also known in the literature as "SolcVersion" (Tsankov et al.,
-2018), "Compiler version not fixed" (Tikhomirov et al., 2018), "Unfixed compiler version" (Lu
-et al., 2019), "Usage of complex pragma statement" (Momeni et al., 2019) or "SWC-103 Floating
-Pragma" (SmartContractSecurity, 2020) </p>
+<p>This defect refers to the case where the developer allows a certain contract to be compiled across multiple versions. This allows the known faults in older versions to be easily activated. (Zhang et al., 2019). This vulnerability is also known in the literature as "compiler version not fixed" (Tikhomirov et al., 2018), "Solc Version" (Tsankov et al., 2018), or "SWC-103 Floating Pragma" (SmartContractSecurity, 2020) </p>
 
 
-<i>4.8.2 Outdated Compiler Version</i>
+<i>5.8.2 Outdated Compiler Version</i>
 <p>
-Contracts that have been developed against an outdated compiler version can bring in several
-risks, mainly because newer versions may have resolved certain bugs or even introduced security
-mechanisms to avoid particular issues (e.g., the throw function has been disallowed in Solidity 0.5.0
-and superior versions, in favor of assert, require⁄, and revert). This vulnerability is also known
-in the literature as "Compiler version problem" (Zhang et al., 2019) , "Unfixed compiler version"
-(Lu et al., 2019) or "SWC-102 Outdated Compiler Version" (SmartContractSecurity, 2020).</p>
+Contracts that have been developed against an outdated compiler version can bring in several risks, mainly because newer versions may have resolved certain bugs or even introduced security mechanisms to avoid particular issues (e.g., the throw function has been disallowed in Solidity 0.5.0 and superior versions, in favor of assert, require⁄, and revert). This vulnerability is also known in the literature as "SWC-102 Outdated Compiler Version" (SmartContractSecurity, 2020).</p>
 
-<i>4.8.3 Use of Deprecated Functions</i>
+<p>This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of writing. If encountered, the compiler provides the following informative error message: "Error: Source file requires different compiler version (current compiler is 0.8.20+commit.a1b79de6.Darwin.appleclang)- note that nightly builds are considered to be strictly less than the released version"</p>
+
+<i>5.8.3 Use of Deprecated Functions</i>
 <p>
-Deprecated functions are not recommended due to the fact that they are usually replaced by
-functions that solve known security issues or even operate in a more efficient manner (i.e., may
-consume less gas). As an example, sha3 was marked as a deprecated function in Solidity 0.5 and
-replaced by keccak256, which is more secure and efficient. This vulnerability is also known in the
-literature as "SWC-111 Use of deprecated solidity functions" (SmartContractSecurity, 2020).</p>
+Deprecated functions are not recommended due to the fact that they are usually replaced by functions that solve known security issues or even operate in a more efficient manner (i.e., may consume less gas). As an example, sha3 was marked as a deprecated function in Solidity 0.5 and replaced by keccak256, which is more secure and efficient. This vulnerability is also known in the literature as "SWC-111 Use of deprecated solidity functions" (SmartContractSecurity, 2020).</p>
 
-<h3>4.9 Inadequate Data Representation</h3>
+<p>This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of writing. If encountered, the compiler provides the following informative error message: "Error: suicide has been deprecated in favor of self-destruct"</p>
+
+<h3>5.9 Inadequate Data Representation</h3>
 <p>
-The numbers to represent the credits (e.g., Ether) can be very large (i.e., literals with many digits
-are difficult to read and review). Thus it is recommended that the programmer use the native
-resources of the language to make this representation (e.g., Solidity 10000000000000000000 for 1
-ether). This vulnerability is also known in the literature as "too-many-digits" (Tsankov et al., 2018). </p>
+The numbers to represent the credits (e.g., Ether) can be very large (i.e., literals with many digits are difficult to read and review). Thus it is recommended that the programmer use the native resources of the language to make this representation (e.g., Solidity 10000000000000000000 for 1 ether). This vulnerability is also known in the literature as "too-many-digits" (Li et al., 2022d; Tsankov et al., 2018) </p>
 
-<h3>4.10 Improper Modifier</h3>
+<h3>5.10 Improper Modifier</h3>
 <p>This group gathers defects that relate to the use of modifiers in functions and variables.</p>
 
-<i>4.10.1 Wrong Function Modifier</i>
+<i>5.10.1 Wrong Function Modifier</i>
 <p>
-This defect refers to the case of functions that are written solely to be used by other contracts (i.e.,
-not within the contract). Such functions should be marked with the external modifier instead
-of public. The public modifier allows both external and internal calls. Marking a function with
-external results in gas savings, as every invocation will be using calldata (a special memory region
-to store arguments, which cannot be later modified by the function) and can avoid unnecessary read
-and write operations to memory, which occur with internal calls (i.e., that do not use calldata).
-This vulnerability is also known in the literature as "external-function" (Tsankov et al., 2018) or
-"SWC-100: Function Default Visibility" (SmartContractSecurity, 2020). </p>
+This defect refers to the case of functions that are written solely to be used by other contracts (i.e., not within the contract). Such functions should be marked with the external modifier instead of public. The public modifier allows both external and internal calls. Marking a function with external results in gas savings, as every invocation will be using calldata (a special memory region to store arguments, which cannot be later modified by the function) and can avoid unnecessary read and write operations to memory, which occur with internal calls (i.e., that do not use calldata). This vulnerability is also known in the literature as "external-function" (Tsankov et al., 2018), or "SWC-100: Function Default Visibility" (SmartContractSecurity, 2020). </p>
 
-<i>4.10.2 Missing Constant Modifier in Variable Declaration</i>
+<i>5.10.2 Missing Constant Modifier in Variable Declaration</i>
 <p>
-Variables that are not modified during the execution flow should be declared as constants to save
-gas. In the absence of the constant modifier, it is assumed that the variable’s value can be changed.
-This vulnerability is also known in the literature as "ConstableStates" (Tsankov et al., 2018) or
-"State variables that could be declared as constant" (Momeni et al., 2019). </p>
+Variables that are not modified during the execution flow should be declared as constants to save gas. In the absence of the constant modifier, it is assumed that the variable’s value can be changed. This vulnerability is also known in the literature as "constable states" (Tsankov et al., 2018). </p>
 
 
-<i>4.10.3 Missing Visibility Modifier in Variable Declaration</i>
+<i>5.10.3 Missing Visibility Modifier in Variable Declaration</i>
 <p>
-Variables have different visibility states, which determine the context for accessing them. In Solidity,
-by default, the visibility of state variables and functions is internal, which allows access from
-functions in the same contract or derived contracts. A developer that is unaware of this may create
-a contract that allows exposure of sensitive data or allow unexpected behavior. This vulnerability is
-also known in the literature as "StateVariablesDefaultVisibility" (Tsankov et al., 2018), "Visibility
-level" (Tikhomirov et al., 2018; Zhang et al., 2019), "Unspecified visibility level" (Lu et al., 2019),
-"Gain/Lose visibility" (Chapman et al., 2019) or "SWC-108: State Variable Default Visibility"
-(SmartContractSecurity, 2020). </p>
+Variables have different visibility states, which determine the context for accessing them. In Solidity,by default, the visibility of state variables and functions is internal, which allows access from functions in the same contract or derived contracts. A developer that is unaware of this may create a contract that allows exposure of sensitive data or allow unexpected behavior. This vulnerability is also known in the literature as "implicit Visibility" (Ashizawa et al., 2021) , "state variables default
+visibility" (Tsankov et al., 2018), "visibility level" (Tikhomirov et al., 2018), or "SWC-108: State Variable Default Visibility" (SmartContractSecurity, 2020). </p>
 
-<h3>4.11 Redundant Functionality</h3>
+<h3>5.11 Redundant Functionality</h3>
 <p>
-Contracts that are written with redundant functionality increase code size and make maintainability
-difficult. In a simple scenario, a programmer creates a function and later (by bad practices) ends up
-creating the same functionality again in a new function. He/she identifies a vulnerability in the new
-function and fixes it, but the old function with the defect is used by the caller. This vulnerability is
-also known in the literature as "Redundant refusal of payment" (Zhang et al., 2019), "Redundant
-fallback function" (Tikhomirov et al., 2018), or "Unnecessary payable fallback function" (Lu et al.,
-2019). </p>
+Contracts that are written with redundant functionality increase code size and make maintainability difficult. In a simple scenario, a programmer creates a function and later (by bad practices) ends up creating the same functionality again in a new function. He/she identifies a vulnerability in the new function and fixes it, but the old function with the defect is used by the caller. This vulnerability is also known in the literature as "redundant fallback function" (Shakya et al., 2022) or "redundant
+fallback function" (Tikhomirov et al., 2018). </p>
 
-<h3>4.12 Shadowing</h3>
+<h3>5.12 Shadowing</h3>
+<p> This category groups defects in which there are code elements (e.g., a function or a variable) with the same name, which can lead to erroneous and unexpected behavior.</p>
+
+<i>5.12.1 Use of Same Variable or Function Name In Inherited Contract</i>
+
 <p>
-This category groups defects in which there are code elements (e.g., a function or a variable) with
-the same name, which can lead to erroneous and unexpected behavior.</p>
+  When using the same name as a local variable, which was previously declared by an inherited contract, the program loses the reference of the inherited variable, causing the local variable to assume the role of the other variable. This vulnerability is also known in the literature as "shadow memory" (Ashouri, 2020), "shadowing state variables" (Tsankov et al., 2018), "shadowing" (Feist et al., 2019), or "SWC-119: Shadowing State Variables" (SmartContractSecurity, 2020). </p>
 
-<i>4.12.1 Use of Same Variable or Function Name In Inherited Contract</i>
-<p> When using the same name as a local variable, which was previously declared by an inherited
-contract, the program loses the reference of the inherited variable, causing the local variable to
-assume the role of the other variable. This vulnerability is also known in the literature as "Shadowing
-state variables" (Tsankov et al., 2018), "Shadow memory" (Ashouri, 2020), "Shadowing" (Feist
-et al., 2019) or "SWC-119: Shadowing State Variables" (SmartContractSecurity, 2020). </p>
+<p> This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of writing. If encountered, the compiler provides the following informative error message: "Error: Identifier already declared".</p>
 
-<i>4.12.2 Variables or Functions Named After Reserved Words</i>
-<p> This bug occurs when creating variables named after keywords of the language itself. For example,
-in Solidity, creating a variable with the name now conflicts with the function that returns the date
-and time. This vulnerability is also known in the literature as "ShadowedBuiltin" (Tsankov et al.,
-2018). </p>
-<i>4.12.3 Use of the Same Variable or Function Name In a Single Contract</i>
+<i>5.12.2 Variables or Functions Named After Reserved Words</i>
+
+<p>This bug occurs when creating variables named after keywords of the language itself. For example, in Solidity, creating a variable with the name now conflicts with the function that returns the date and time. This vulnerability is also known in the literature as "shadowed builtin(Tsankov et al., 2018) or "shadowing-builtin" (Li et al., 2022d) </p>
+
+<p> This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of writing. If encountered, the compiler provides the following informative warning message: "Warning: This declaration shadows a built-in symbol"
+ </p>
+
+
+<i>5.12.3 Use of the Same Variable or Function Name In a Single Contract</i>
 <p>
-This vulnerability refers to cases where the same name is used for more than one variable or
-function inside the contract. This makes the program lose the reference of the variable of the class, assuming the variable of the function as its role. This vulnerability is also known in the literature as
-"ShadowedLocalVariable" (Tsankov et al., 2018), "Redefined Variable" (Hu et al., 2023) or "Local
-variable shadowing" (Momeni et al., 2019). </p>
+This vulnerability refers to cases where the same name is used for more than one variable or function inside the contract. This makes the program lose the reference of the variable of the class, assuming the variable of the function as its role. This vulnerability is also known in the literature as "redefined variable" (Hu et al., 2023) or "shadowed local variable" (Tsankov et al., 2018)</p>
 
-<h3>4.13 Buffer Overflow</h3>
-<p>
-This category refers to overflow vulnerabilities (e.g., stack-based, heap-based) in which it is possi-
-ble to write more data than what the buffer can hold, thus modifying memory areas outside the
-expected. </p>
+<p>This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of writing. If encountered, the compiler provides the following informative warning message: "Warning: This declaration shadows an existing declaration"</p>
 
-<i>4.13.1 Stack-based Buffer Overflow</i>
-<p>
-The EVM keeps an execution stack that manages the execution of contracts. If an attacker is allowed
-to overflow this stack (e.g., by using specially crafted inputs), it can potentially overwrite control
-variables (e.g., timestamp or block number) and, for instance, gain unauthorized access to certain
-resources. This vulnerability is also known in the literature as "Stack size limited" (Argañaraz et al.,
-2020).  </p>
 
-<i>4.13.2 Write to Arbitrary Storage Location</i>
+<h3>5.13 Buffer Overflow</h3>
 <p>
-In solidity, arrays are stored as contiguous fixed-size slots. In the absence of a bounds verification,
-a malicious user could write data to a particular storage slot used to store the contract owner’s
-address, which could be overwritten and then used to further harm the contract. This vulnerability is
-also known in the literature as "UnrestrictedWrite" (Tsankov et al., 2018) , "Storage modification"
-(Krupp and Rossow, 2018),"Arbitrary Write" (Choi et al., 2021) or "SWC-124: Write to Arbitrary
-Storage Location" (SmartContractSecurity, 2020). </p>
+This category refers to buffer-related vulnerabilities (e.g., stack-based, heap-based, bugger overread) in which it is possible to write more data than what the buffer can hold, thus modifying memory areas outside the expected or read the buffer using mechanisms such as indexes or pointers that reference memory locations after the targeted buffer. </p>
+
+<i>5.13.1 Stack-based Buffer Overflow</i>
+<p>
+The EVM keeps an execution stack that manages the execution of contracts. If an attacker is allowed to overflow this stack (e.g., by using specially crafted inputs), it can potentially overwrite control variables (e.g., timestamp or block number) and, for instance, gain unauthorized access to certain resources. This vulnerability is also known in the literature as "Stack size limited" (Atzei et al., 2017). </p>
+
+<i>5.13.2 Write to Arbitrary Storage Location</i>
+<p>
+In solidity, arrays are stored as contiguous fixed-size slots. In the absence of a bounds verification, a malicious user could write data to a particular storage slot used to store the contract owner’s address, which could be overwritten and then used to further harm the contract. This vulnerability is also known in the literature as "arbitrary write" (Choi et al., 2021), "buffer-overwrite" (Pani et al., 2023), "storage modification" (Krupp and Rossow, 2018), "unrestricted write" (Tsankov et al., 2018), or "SWC-124: Write to Arbitrary Storage Location" (SmartContractSecurity, 2020).. </p>
 
 <h3>4.14 Use of Malicious Libraries</h3>
 <p> This defect refers to the use of third-party libraries containing malicious code. This vulnerability is
