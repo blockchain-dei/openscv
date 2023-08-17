@@ -215,8 +215,9 @@ can lead to an erroneous vision of the correct balance of the account. Indeed, t
 account may not reflect the currency transferred in an exact manner, leading to potential errors
 and opening the door to security issues. This vulnerability is also known in the literature as "forged
 transfer notification" (Li et al., 2022c), "unchecked send" (Kalra et al., 2018; Akca et al., 2019;
-Stephens et al., 2021), or "including Fake EOS transfer" (Li et al., 2022c). This issue has been addressed in the latest Solidity compiler, version 0.8.20 at the time of writing. If encountered, the compiler provides the following informative warning message: "Warning: Failure
-condition of send ignored. Consider using transfer instead"</p>
+Stephens et al., 2021), or "including Fake EOS transfer" (Li et al., 2022c).</p>
+
+<p>This issue has been addressed in the latest Solidity compiler, version 0.8.20 at the time of writing. If encountered, the compiler provides the following informative warning message: "Warning: Failure condition of send ignored. Consider using transfer instead"</p>
 
 <h3>4.2 Unprotected Transfer Value</h3>
 <p>The transfer function uses a numeric variable for transfers and may be vulnerable if it does not protect or specify limits for the values. When attribute address.balance is used for identifying the amount to be transferred, it will result in transferring the total balance at once, which is a high-risk operation for the cases where the amount is high (Zhang et al., 2020b). This vulnerability is also known in the literature as "arbitrarily transfer" (Ma et al., 2023), "ETH transfer inside the loop" (Shakya et al., 2022), "ether leak" (Choi et al., 2021), "manipulated balance" (Hu et al.,2023), "multiple send" (Choi et al., 2021), "transfer forwards all gas" (Tikhomirov et al., 2018), "unchecked transfer value" (Zhang et al., 2020b), "unrestricted ether flow" (Tsankov et al., 2018), or "SWC-105 Unprotected Ether Withdrawal" (SmartContractSecurity, 2020)</p>
@@ -246,100 +247,65 @@ notification. This vulnerability is also known in the literature as "fake notifi
   
 <h2>5. Bad Programming Practices and Language Weaknesses</h2>
 
-<p>This category represents issues that are mostly related to bad programming practices (i.e., error-prone or insecure coding practices) and language weaknesses, which are mostly related to insufficient
-protection mechanisms offered by the language, allowing the developers to make mistakes that could
+<p>This category represents issues that are mostly related to bad programming practices (i.e., error-prone or insecure coding practices) and language weaknesses, which are mostly related to insufficient protection mechanisms offered by the language, allowing the developers to make mistakes that could
 be avoided, e.g., by language constructs.</p>
 
-<h3>4.1 Bad Randomness</h3>
+<h3>5.1 Bad Randomness</h3>
 
-<p>This vulnerability is related to the use of the variables that control the blocks in a blockchain as a
-way of generating randomness, which is not secure. Such variables may be manipulated by miners so
-that the randomness is subverted, compromising the security of the blockchain, with its information
-becoming vulnerable to attacks. In fact, generating a strong enough source of randomness can be
-very challenging. The use of variables like block.timestamp, blockhash, block.difficulty, and
-other fields is problematic as these can be manipulated by miners. For example, a miner could
-select a specific timestamp within a delimited range, or use powerful hardware to mine several
-blocks quickly, choose the block that would provide an interesting hash, and drop the remaining.
-This vulnerability is also known in the literature as "Generating Randomness" (Grishchenko et al.,
-2018; Tsankov et al., 2018), "Random generation" (Argañaraz et al., 2020), "Bump Seeds" (Cui
-et al., 2022), "Dependence on predictable variables" (Lu et al., 2019), "Bad randomness" (Ashouri,
-2020; Hu et al., 2023), "Bad random" (Feng et al., 2019) or "SWC-120 Weak Sources of Randomness
-from Chain Attributes" (SmartContractSecurity, 2020). </p>
+<p>This vulnerability is related to using the variables that control the blocks in a blockchain to generate randomness, which is not secure. Such variables may be manipulated by miners so that the randomness is subverted, compromising the security of the blockchain, with its information becoming vulnerable to attacks. In fact, generating a strong enough source of randomness can be very challenging. The use of variables like block.timestamp, blockhash, block.difficulty, and other fields is problematic as these can be manipulated by miners. For example, a miner could select a specific timestamp within a delimited range, or use powerful hardware to mine several blocks quickly, choose the block that would provide an interesting hash, and drop the remaining. This vulnerability is also known in the literature as "bad randomness" (Hu et al., 2023; Crincoli et al., 2022; Ashouri, 2020), "bump Seeds(Cui et al., 2022), "generating randomness" (Gupta et al., 2022), "random
+number generation" (Li et al., 2022b), "use predictable variable" (Zhou et al., 2022b), "predicable variable dependency" (Fu et al., 2019), or "SWC-120 Weak Sources of Randomness from Chain Attributes" (SmartContractSecurity, 2020).</p>
 
-<h3>4.2 Improper Initialization</h3>
+<h3>5.2 Improper Initialization</h3>
 
-<p>The smart contract has resources that are either not initialized or are initialized in an incorrect
-manner, leading to unexpected behavior.</p>
+<p>The smart contract has resources that are either not initialized or initialized incorrectly, leading to
+unexpected behavior.</p>
 
-<i>4.2.1 Missing Constructor</i>
+<i>5.2.1 Missing Constructor</i>
 
-<p>A smart contract constructor is a function that is executed exactly once during the lifetime of a
-contract. It executes at deployment time and initializes state variables, performs a few necessary
-tasks that the specific contract requires, and sets the contract owner. If there is no constructor,
-the developer will have to implement such tasks manually, which is prone to security issues (e.g.,
-variables may be set with incorrect values or forgotten, which may result in security problems). This
-vulnerability is also known in the literature as "Unsecure balance" (Brent et al., 2018), "Missing
-constructor" (Zhang et al., 2019) or "SWC-118 Incorrect Constructor Name" (SmartContractSecurity, 2020).</p>
+<p>A smart contract constructor is a function that is executed exactly once during the lifetime of a con-
+tract. It executes at deployment time, initializes state variables, performs a few necessary tasks that
+the specific contract requires, and sets the contract owner. If there is no constructor, the developer
+will have to implement such tasks manually, which is prone to security issues (e.g., variables may be
+set with incorrect values or forgotten, which may result in security problems). This vulnerability is
+also known in the literature as "SWC-118 Incorrect Constructor Name" (SmartContractSecurity, 2020).</p>
 
-<i>4.2.2 Wrong Constructor Name</i>
-<p> Contract published without a constructor because the programmer created a function, imagining
-that it would behave like a constructor. Usually, the construction function has sensitive code (e.g.,
-assignment of the owner of the contract), and by declaring a wrong function name, any user can call
-the function, thus, causing serious security risks. This vulnerability is also known in the literature
-as "Constructor name" (Andesta et al., 2020), "Erroneous Constructor Name" (Hu et al., 2023) or
-"SWC-118 Incorrect Constructor Name" (SmartContractSecurity, 2020).</p>
+<i>5.2.2 Wrong Constructor Name</i>
+<p>This vulnerability is related to the contracts that were published without a constructor because the programmer created a function, imagining it would behave like a constructor. Usually, the construction function has sensitive code (e.g., assignment of the owner of the contract), and by declaring a wrong function name, any user can call the function, thus, causing serious security risks. This vulnerability is also known in the literature as "erroneous constructor name" (Hu et al., 2023), "violated access control checks (VACC)" (Ghaleb et al., 2023), or "SWC-118 Incorrect Constructor Name" (SmartContractSecurity, 2020).</p>
 
-<i>4.2.3 Missing Variable Initialization</i>
-<p> This defect refers to the lack of initialization of variables that are used throughout the contract.
-Obviously, the effects can largely vary, depending on the variable itself and on the context in which
-is being used. This vulnerability is also known in the literature as "UninitializedStateVariable"
-(Tsankov et al., 2018), "Uninitialized-local" (Tsankov et al., 2018) or "Uninitialized variables"
-(Feist et al., 2019).</p>
+<p>  This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of writing. If encountered, the compiler provides the following informative error message: "Error: Functions are not allowed to have the same name as the contract. If you intend this to be a constructor, use constructor(...) ... to define it. Error: Expected identifier but got ()"
+</p>
 
-<i>4.2.4 Uninitialized Storage Variables</i>
-<p> In Solidity, state variables are assigned to memory or storage. When a state variable is declared,
-it is assigned to a certain storage slot. If that variable is not initialized, it will be stored in slot
-0 (the first one) of the contract’s storage. Thus, it may conflict with the next variable that is
-declared in the same slot, causing an address conflict. This latter variable will overwrite the first,
-leading to unexpected behavior. This is the reason why it is important to initialize all state variables
-in a smart contract so that they are set into the correct storage slots (and possible conflicts are
-avoided)(Antonopoulos and Wood, 2018). This vulnerability is also known in the literature as
-"Uninitialized storage pointers" (Antonopoulos and Wood, 2018), "UninitializedStorage" (Tsankov
-et al., 2018; Hu et al., 2023) or "SWC-109 Uninitialized Storage Pointer" (SmartContractSecurity,
-2020).</p>
+<i>5.2.3 This defect refers to the lack of initialization of variables that are used throughout the contract. Obviously, the effects can largely vary, depending on the variable itself and on the context in which is being used. This vulnerability is also known in the literature as "golang grammar error" (Li et al., 2022b), "uninitialized variables" (Feist et al., 2019), "uninitialized-local" (Tsankov et al., 2018), or"uninitialized state variable" (Tsankov et al., 2018).</p>
 
-<h3>4.3 Improper Credit Transfer</h3>
-<p>This category groups defects which are generally related to improper credit transfer operations.</p>
-
-<i>4.3.1 Missing Check On Transfer Credit</i>
-<p> This defect refers to the absence of verification after a transfer event, which can lead to an erroneous
-vision of the correct balance of the account. Indeed, the balance of the account may not reflect the
-currency transferred in an exact manner, leading to potential errors and opening the door to security
-issues. This vulnerability is also known in the literature as "Unchecked send" (Kalra et al., 2018;
-Stephens et al., 2021; Brent et al., 2018; Akca et al., 2019; Lu et al., 2019). </p>
+<i>5.2.4 Uninitialized Storage Variables</i>
+<p>In Solidity, state variables are assigned to memory or storage. When a state variable is declared, it is assigned to a certain storage slot. If that variable is not initialized, it will be stored in slot 0 (the first one) of the contract’s storage. Thus, it may conflict with the next variable that is declared in the same slot, causing an address conflict. This latter variable will overwrite the first, leading to unexpected behavior. This is the reason why it is important to initialize all state variables in a smart contract so that they are set into the correct storage slots (and possible conflicts are avoided)(Antonopoulos and Wood, 2018). This vulnerability is also known in the literature as "uninitialized storage pointers" (Antonopoulos and Wood, 2018), "uninitialized Storage" (Tsankov et al., 2018; Hu et al., 2023), or "SWC-109 Uninitialized Storage Pointer" (SmartContractSecurity, 2020). </p>
+  
+<p> This issue has been addressed in the latest Solidity compiler, version 0.8.20 at the time of writing. If encountered, the compiler provides the following informative error message: "Error: This variable is of storage pointer type and can be accessed without prior assignment, which would lead to undefined behavior.".</p>
 
 
-<i>4.3.2 Unprotected Transfer Value</i>
-<p>The transfer function uses a numeric variable for transfers and may be vulnerable if it does not
-protect or specify limits for the values. When attribute address.balance is used for identifying the
-amount to be transferred, it will result in transferring the total balance at once, which is a high-risk
-operation for the cases where the amount is high (Zhang et al., 2020). This vulnerability is also
-known in the literature as "Unchecked transfer value" (Zhang et al., 2020) , "Transfer forwards
-all gas" (Tikhomirov et al., 2018), "UnrestrictedEtherFlow" (Tsankov et al., 2018), "Ether Leak"
-(Choi et al., 2021), "Manipulated Balance" (Hu et al., 2023), "Multiple Send" (Choi et al., 2021)
-or "SWC-105 Unprotected Ether Withdrawal" (SmartContractSecurity, 2020). </p>
+<i>5.2.5 Extraneous Field Declaration</i>
+<p>This vulnerability occurs when the programmer leaves field declarations in the contract structure, thereby enabling direct access to these fields (i.e., as they are defined in the structure). Given the possibility of the node environment falling out of sync, the contract’s field values may diverge and become inconsistent among peer nodes. This vulnerability is also known in the literature as "field declarations" (Li et al., 2022b).</p>
 
-<i>4.3.3 Wrong use of Transfer Credit Function</i>
 
-<p>Depending on the programming language, there are different ways to carry out credit transfer
-operations. In Solidity, transfer and send will both allow executing a credit transfer. However, in
-the case of a problem, transfer will abort the process with an exception, whereas send function
-will return false, and transaction execution is continued. An attacker may manipulate the send
-function and be able to continue executing a credit transfer operation without proper authorization.
-This vulnerability is also known in the literature as "Failed Send" (Kalra et al., 2018), "Use of send
-instead of transfer"(Argañaraz et al., 2020), or "Send instead of transfer" (Tikhomirov et al., 2018).  </p>
+<i>5.2.6 Hardcoded Address</i>
+<p>This vulnerability occurs when the programmer leaves field declarations in the contract structure, thereby enabling direct access to these fields (i.e., as they are defined in the structure). Given the possibility of the node environment falling out of sync, the contract’s field values may diverge and become inconsistent among peer nodes. This vulnerability is also known in the literature as "field declarations" (Li et al., 2022b).</p>
 
-<h3>4.4 Error in Function Call</h3>
+<h3>5.3 Isolation Phenomena</h3>
+<p>This category gathers vulnerabilities that occur due to blockchain synchronization systems (i.e., enforced by consensus mechanisms), which can lead a program to produce different results at different times for the same query</p>
+
+<i>5.3.1 Phantom Reads</i>
+<p>The Hyperledger Fabric provides mechanisms for reading the ledger (i.e., getPrivateDataQueryResult), similar to querying conventional databases, but with the difference that the programmer cannot decide about the isolation level of the ledger. Thus, a contract can read out-of-sync node information from the ledger (i.e., during the validation phase) computing and/or processing based on outdated information. This vulnerability is also known in the literature as "range query risks"
+(Li et al., 2022b)</p>
+
+<i>5.3.2 Dirty Reads</i>
+<p>
+  In the context of HF, a query may return a key value before its update within the same
+transaction. As a consequence, this behavior can lead to unexpected results, as the returned value
+might not reflect the most recent update. This vulnerability is also known in the literature as
+"read-write conflict" (Li et al., 2022b)
+</p>
+
+<h3>5.4 Error in Function Call</h3>
 <p>
 In a blockchain context, each function in a smart contract is identified by its name, input parameters,
 and output parameters. Thus, these items compose the function signature, which is used by the
@@ -347,44 +313,52 @@ contracts to verify that the right function is being called. This category group
 developer uses a function in the wrong manner: either a wrong signature is used, wrong arguments
 are used, or a wrong function is called. </p>
 
-<i>4.4.1 Wrong Function Call</i>
+<i>5.4.1 Wrong Function Call</i>
 <p>
 The issue occurs when a contract executes a certain function at a wrong address, i.e., at the address
 used by another function, which, however, has the same signature as the intended function. This
-vulnerability is also known in the literature as "Type casts" (Atzei et al., 2017).</p>
+vulnerability is also known in the literature as "type casts" (Atzei et al., 2017).</p>
 
-<i>4.4.2 Wrong Selection of Guard Function</i>
+<i>5.4.2 Wrong Selection of Guard Function</i>
 <p>
 Assert is a Solidity function, which is recommended to be used only in the development phase.
 Intentionally, the programmer inserts the function at a specific point in the program where a bug
 is suspected. If running the program results in gas depletion, the suspicion is confirmed.
-Thus, this defect refers to the cases in which the assert function is implemented with the
-wrong purpose, not having the expected effect. In more severe cases, in which the programmer
-forgets to remove it from the code or does not replace it with require, the impact of this defect
-can be serious. This vulnerability is also known in the literature as "AssertFail" (Liao et al., 2019),
-"Assertion Failure" (Choi et al., 2021) or "SWC-110 Assert Violation" (SmartContractSecurity,
-2020).</p>
+Thus, this defect refers to the cases in which the assert function is implemented with the wrong
+purpose, not having the expected effect. In more severe cases, in which the programmer forgets to
+remove it from the code or does not replace it with require, the impact of this defect can be serious.
+This vulnerability is also known in the literature as "assert fail" (Zhang et al., 2022a), "assertion
+failure" (Choi et al., 2021; Torres et al., 2021), "assertion violation" (Sunbeom et al., 2021), or
+"SWC-110 Assert Violation" (SmartContractSecurity, 2020).</p>
 
 
-<i>4.4.3 Function Call with Wrong Arguments</i>
-<p>
-This defect refers to the presence of certain control characters within the arguments of a function
+<i>5.4.3 Function Call with Wrong Arguments</i>
+<p>This defect refers to the presence of certain control characters within the arguments of a function
 call, namely the right-to-left override control character, which can cause the function to execute
 with arguments in reverse order. This is a known issue also in other computing areas (Yosifova
-and Bontchev, 2021). This vulnerability is also known in the literature as "RightToLeftOverride"
-(Tsankov et al., 2018) or "SWC-130 Right-To-Left-Override control character (U+202E)".</p>
+and Bontchev, 2021). This vulnerability is also known in the literature as "right to left override"
+(Tsankov et al., 2018), "rtlo" (Li et al., 2022d), or "SWC-130 Right-To-Left-Override control char-
+acter (U+202E)"</p>
 
+<p>This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of
+writing. Now, if encountered, the compiler provides the following informative error message: "Error:
+Mismatching directional override markers in a comment or string literal"</p>
 <h3>4.5 Wrong Class Inheritance Order</h3>
 <p>
-Contracts may have inheritance relationships with other contracts. In the case of solidity, the code
+
+<h3>5.5 Wrong Class Inheritance Order </h3>
+<p>Contracts may have inheritance relationships with other contracts. In the case of solidity, the code
 of the inherited contract is always executed first, e.g., so that state variables are initialized properly.
 Solidity uses an algorithm named C3 linearization to determine the order in which the contracts are
 to be executed. Developers specify the inheritance relationships in a inherit statement and may
 believe that the order in which the inherited contracts are specified in that statement reflects the
 order in which the linearization algorithm should work. This opens space for security issues due to
 the wrong order of the contract in the inherit statement. This vulnerability is also known in the
-literature as "Unpredictable state" (Grishchenko et al., 2018; Argañaraz et al., 2020) or "SWC-125
-Incorrect Inheritance Order"(SmartContractSecurity, 2020). </p>
+literature as "SWC-125 Incorrect Inheritance Order"(SmartContractSecurity, 2020).</p>
+<p> This issue has been addressed in the latest Solidity compiler, version 0.8.20 at the time of writing.
+Now, if encountered, the compiler provides the following informative error message: "Error: Derived
+contract must override function "validPurchase". Two or more base classes define a function with
+same name and parameter types".</p>
 
 <h3>4.6 Improper Type Usage</h3>
 <p>This category groups vulnerabilities in which there is some misuse of types of data structures or
