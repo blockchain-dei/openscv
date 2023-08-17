@@ -1,4 +1,4 @@
-<h1 align="center">OpenSCV: An Open Hierachical Taxonomy for Smart Contract Vulnerabilities</h1>
+<h1 align="center">OpenSCV: An Open Hierarchical Taxonomy for Smart Contract Vulnerabilities</h1>
 
 
 OpenSCV is a taxonomy for smart contract vulnerabilities, proposed in: Vidal FR, Ivaki N, Laranjeiro N (2023d) Openscv: "An open hierarchical taxonomy for smart contract vulnerabilities". URL https://doi.org/10.48550/arXiv.2303.14523.
@@ -144,55 +144,44 @@ reception. This vulnerability is known in the literature with the same name (Li 
 
 <h2>2. Mishandled Events</h2>
 <p>This category includes a set of vulnerabilities in which exceptional events are mishandled. In Solidity,
-there are specific functions that can be used to verify if certain conditions exist and to throw
-exceptions in the case the conditions are not met, namely require and assert. There are, however,
-fundamental differences. When the require function returns false, all executed changes are reverted,
-and all remaining gas fees are refunded. When the assert function returns false, it reverts all
-changes but consumes all remaining gas. However, such differences have become a frequent source
-of problems (Hajdu and Jovanović, 2020).</p>
+specific functions can be used to verify if certain conditions exist and throw exceptions in case the
+conditions are not met, namely require and assert. There are, however, fundamental differences.
+When the "require" function returns false, all executed changes are reverted, and all remaining gas
+fees are refunded. When the assert function returns false, it reverts all changes but consumes all
+remaining gas. However, such differences have become a frequent source of problems (Hajdu and Jovanović, 2020).</p>
 
 <h3>2.1 Improper Exceptional Events Handling</h3>
 
 
-<p>This first group of vulnerabilities is directly related to exceptional events, which, when mishandled,
-are many times linked to the loss of atomicity in operations as well as other effects, such as excessive
-gas consumption or unauthorized access.</p>
+<p>This first group of vulnerabilities is directly related to exceptional events, which, when mishandled, are often linked to the loss of atomicity in operations and other effects, such as excessive gas consumption or unauthorized access.</p>
 
 <i>2.1.1 Improper Use of Exception Handling Functions</i>
 
-<p>Diverse runtime errors (e.g., out-of-gas error, data type overflow error, division by zero error, array-
+<p>Diverse run-time errors (e.g., out-of-gas error, data type overflow error, division by zero error, array-
 out-of-index error, etc.) may happen after a compiled smart contract is deployed. However, Solidity
 has many functions for error handling (e.g., throw, assert, require, revert), but their correct
 use relies on the experience and expertise of the developer. This defect occurs when the developer
 misuses the handling exception functions, which can lead the program to unexpected behavior. This
-vulnerability is also known in the literature as "Mishandled exceptions" (Grishchenko et al., 2018;
-Choi et al., 2021; Zhang et al., 2019; Nguyen et al., 2020; Luu et al., 2016), "UnhandledException"
-(Ashouri, 2020; Tsankov et al., 2018), "Exception disorder (Jiang et al., 2018)", or "Exception
-state" (Momeni et al., 2019).</p>
+vulnerability is also known in the literature as "exception disorder" (Jiang et al., 2018), "exception
+state" (Zhou et al., 2022b), "mishandled exceptions (Choi et al., 2021; Fu et al., 2019; Luu et al.,
+2016; Mavridou et al., 2019; Nguyen et al., 2020), "unexpected revert" (Ye et al., 2022), "unhandled
+errors" (Li et al., 2022b), "unhandled exception" (Ashouri, 2020; Torres et al., 2021), or "unhandled
+exception" (Tsankov et al., 2018).</p>
 
 <i>2.1.2 Improper Exception Handling in a Loop</i>
 
-<p>This vulnerability occurs when a transaction is excessively large (i.e., it executes too many statements) and may lead to excessive costs. For instance, when one of the statements in a transaction
-fails (e.g., due to a software bug), the transaction will not be packaged into a block, and the consumed gas will not be returned to the user (and actually the concluded operations are reverted and
-must be executed again). Thus, such kinds of transactions should be decomposed into smaller parts
-so that the likelihood of success increases and the negative effects associated with the failure cases
-diminish. This vulnerability is also known in the literature as "CallInLoop" (Tsankov et al., 2018),
-"Revert DOS" (Stephens et al., 2021), "Costly loop" (Zhang et al., 2019; Tikhomirov et al., 2018;
-Lu et al., 2019), "Multiple calls in a single transaction" (Momeni et al., 2019), "UnboundedMassOperation" (Grech et al., 2020) or "SWC-128: DoS With Block Gas Limit" (SmartContractSecurity,
-2020).</p>
+<p>This vulnerability occurs when a transaction is excessively large (i.e., it executes too many statements) and may lead to excessive costs. For instance, when one of the statements in a transaction fails (e.g., due to a software bug), the transaction will not be packaged into a block, and the consumed gas will not be returned to the user (and actually the concluded operations are reverted and must be executed again). Thus, such kinds of transactions should be decomposed into smaller parts so that the likelihood of success increases and the negative effects associated with the failure cases diminish. This vulnerability is also known in the literature as "call in loop"(Tsankov et al., 2018), "costly loop" (Shakya et al., 2022; Tikhomirov et al., 2018), "expensive operations in a loop" (Chen et al., 2021), "fusible loops" (Chen et al., 2021), "repeated computation in a loop" (Chen et al.,2021), "revert DOS" (Stephens et al., 2021), "unilateral comparison in a loop" (Chen et al., 2021), "unbounded mass operation" (Grech et al., 2020), "costly-operations-loop" (Li et al., 2022d), "gas limit DoS on a contract via unbounded operations" (Nassirzadeh Behkish and Sun et al., 2023), or "SWC-128: DoS With Block Gas Limit" (SmartContractSecurity, 2020).</p>
 
 <i>2.1.3 Incorrect Revert Implementation in a Loop</i>
 
-<p>In the case of this vulnerability, the developer incorrectly specifies how the revert operation should
-be handled (in the context of a loop or a transaction composed of multiple operations), which ends
-up in a partial revert of the whole set of operations that should be reverted. This vulnerability is
-also known in the literature as "Nonisolated calls (wallet griefing)" (Grech et al., 2020), "Push DOS" (Stephens et al., 2021), or "SWC-126 Insufficient Gas Griefing" (SmartContractSecurity, 2020).</p>
+<p>In the case of this vulnerability, the developer incorrectly specifies how the revert operation should be handled (in the context of a loop or a transaction composed of multiple operations), which ends up in a partial revert of the whole set of operations that should be reverted. This vulnerability is also known in the literature as "non-isolated calls (wallet griefing)" (Grech et al., 2020), "push DOS"(Stephens et al., 2021), or "SWC-126 Insufficient Gas Griefing" (SmartContractSecurity, 2020).</p>
 
 <h3>2.2 Improper Token Exception Handling</h3>
 
 <p>The ERC-20 standard (Vogelsteller and Buterin, 2015) provides functionalities to exchange tokens.
-Besides describing the functionalities, the standard specifies good practices for developers to implement its features. Regarding the transfer function, exceptional events can become problematic if
-they are not handled properly.</p>
+Besides describing the functionalities, the standard specifies good practices for developers to imple-
+ment its features. Regarding the transfer function, exceptional events can become problematic if
+handled improperly</p>
 
 <i>2.2.1 Missing Thrown Exception</i>
 
