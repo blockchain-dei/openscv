@@ -209,30 +209,28 @@ amount" (SmartContractSecurity, 2020).</p>
 
 <p>This category groups defects which are generally related to improper credit transfer operations</p>
 
-<h2>4.1 Improper Check on Transfer Credit</h2>
+<h3>4.1 Improper Check on Transfer Credit</h3>
 <p>This defect refers to the absence of verification (or wrong verification) after a transfer event, which
 can lead to an erroneous vision of the correct balance of the account. Indeed, the balance of the
 account may not reflect the currency transferred in an exact manner, leading to potential errors
 and opening the door to security issues. This vulnerability is also known in the literature as "forged
 transfer notification" (Li et al., 2022c), "unchecked send" (Kalra et al., 2018; Akca et al., 2019;
-Stephens et al., 2021), or "including Fake EOS transfer" (Li et al., 2022c).
-This issue has been addressed in the latest Solidity compiler, version 0.8.20 at the time of writing.
-If encountered, the compiler provides the following informative warning message: "Warning: Failure
+Stephens et al., 2021), or "including Fake EOS transfer" (Li et al., 2022c). This issue has been addressed in the latest Solidity compiler, version 0.8.20 at the time of writing. If encountered, the compiler provides the following informative warning message: "Warning: Failure
 condition of send ignored. Consider using transfer instead"</p>
 
-<h2>4.2 Unprotected Transfer Value</h2>
+<h3>4.2 Unprotected Transfer Value</h3>
 <p>The transfer function uses a numeric variable for transfers and may be vulnerable if it does not protect or specify limits for the values. When attribute address.balance is used for identifying the amount to be transferred, it will result in transferring the total balance at once, which is a high-risk operation for the cases where the amount is high (Zhang et al., 2020b). This vulnerability is also known in the literature as "arbitrarily transfer" (Ma et al., 2023), "ETH transfer inside the loop" (Shakya et al., 2022), "ether leak" (Choi et al., 2021), "manipulated balance" (Hu et al.,2023), "multiple send" (Choi et al., 2021), "transfer forwards all gas" (Tikhomirov et al., 2018), "unchecked transfer value" (Zhang et al., 2020b), "unrestricted ether flow" (Tsankov et al., 2018), or "SWC-105 Unprotected Ether Withdrawal" (SmartContractSecurity, 2020)</p>
 
 
-<h2>4.3 Wrong use of Transfer Credit Function</h2>
+<h3>4.3 Wrong use of Transfer Credit Function</h3>
 <p>Depending on the programming language, there are different ways to carry out credit transfer operations. In Solidity, transfer and send will both allow executing a credit transfer. However, in the case of a problem, transfer will abort the process with an exception, whereas send function will return false, and transaction execution is continued. An attacker may manipulate the send function and be able to continue executing a credit transfer operation without proper authorization. This vulnerability is also known in the literature as "failed send" (Kalra et al., 2018), "send instead of transfer" (Shakya et al., 2022; Tikhomirov et al., 2018)</p>
 
-<h2>4.4 Missing Token Issuer Verification</h2>
+<h3>4.4 Missing Token Issuer Verification</h3>
 <p>This vulnerability is related to EOSIO blockchain, in which the ‘transfer‘ function allows attackers
 to win the cryptocurrency without paying a ticket fee. This vulnerability is also known in the
 literature as "fake EOS" (Chen et al., 2022)</p>
 
-<h2>4.5 Missing Token Verification of Exchange</h2>
+<h3>4.5 Missing Token Verification of Exchange</h3>
 <p>This vulnerability arises when an attacker can perform a fake deposit due to inadequate verification
 in the exchange implementation, specifically when unsafe usage of transfer or transferFrom
 functions is present. A potential solution for this issue involves adopting the safeTransferFrom
@@ -240,13 +238,13 @@ function, which incorporates security checks before invoking the transferFrom, t
 the risk. This vulnerability is also known in the literature as "flawed token Verification of DEXes"
 (Ji et al., 2020)</p>
 
-<h2>4.6 Fake Notification</h2>
+<h3>4.6 Fake Notification</h3>
 <p>This vulnerability is related to the EOSIO blockchain, specifically in EOS notifications. The problem
 occurs when the attackers forward the notification from eosio.token to the victim and forge an EOS
 notification. This vulnerability is also known in the literature as "fake notification" (Chen et al.,
 2022) or "fake receipt" (He et al., 2021)</p>
   
-<h2>4. Bad Programming Practices and Language Weaknesses</h2>
+<h2>5. Bad Programming Practices and Language Weaknesses</h2>
 
 <p>This category represents issues that are mostly related to bad programming practices (i.e., error-prone or insecure coding practices) and language weaknesses, which are mostly related to insufficient
 protection mechanisms offered by the language, allowing the developers to make mistakes that could
