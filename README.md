@@ -397,108 +397,81 @@ The EVM keeps an execution stack that manages the execution of contracts. If an 
 
 <i>5.13.2 Write to Arbitrary Storage Location</i>
 <p>
-In solidity, arrays are stored as contiguous fixed-size slots. In the absence of a bounds verification, a malicious user could write data to a particular storage slot used to store the contract owner’s address, which could be overwritten and then used to further harm the contract. This vulnerability is also known in the literature as "arbitrary write" (Choi et al., 2021), "buffer-overwrite" (Pani et al., 2023), "storage modification" (Krupp and Rossow, 2018), "unrestricted write" (Tsankov et al., 2018), or "SWC-124: Write to Arbitrary Storage Location" (SmartContractSecurity, 2020).. </p>
+In solidity, arrays are stored as contiguous fixed-size slots. In the absence of a bounds verification, a malicious user could write data to a particular storage slot used to store the contract owner’s address, which could be overwritten and then used to further harm the contract. This vulnerability is also known in the literature as "arbitrary write" (Choi et al., 2021), "buffer-overwrite" (Pani et al., 2023), "storage modification" (Krupp and Rossow, 2018), "unrestricted write" (Tsankov et al., 2018), or "SWC-124: Write to Arbitrary Storage Location" (SmartContractSecurity, 2020). </p>
 
-<h3>4.14 Use of Malicious Libraries</h3>
-<p> This defect refers to the use of third-party libraries containing malicious code. This vulnerability is
-also known in the literature as "Malicious libraries" (Tikhomirov et al., 2018), "Unknown libraries"
-(Lu et al., 2019), or "Dynamic libraries" (Andesta et al., 2020). </p> 
+<i>5.13.3 Read from Arbitrary Storage Location</i>
+<p> This vulnerability may cause both underflow and overflow issues. Underflow happens when the program accesses a resource in the buffer area, such as an index, before reaching the intended buffer location. On the other hand, overflow occurs when the program accesses a resource in the buffer area, like an index, beyond the intended buffer location. This vulnerability is referred to in the literature as "Buffer-overflow" (Pani et al., 2023) or "Buffer-underflow" (Pani et al., 2023) </p>
+ 
 
-<h3>4.15 Typographical Error</h3>
+<h3>5.14 Use of Malicious Libraries</h3>
+<p> This defect refers to the use of third-party libraries containing malicious code. This vulnerability is also known in the literature as "external library calling" (Li et al., 2022b) or "malicious libraries" (Tikhomirov et al., 2018) </p> 
+
+<h3>5.15 Typographical Error</h3>
 <p>
-This defect refers to single-digit errors made by programmers while typing source code, e.g., in logic
-or arithmetic operations. For example, for value assignment, a developer may type by mistake "+ ="
-instead of "=" or may use "−" instead of "+" or "−−" instead of "++" (Hartel and Schumi, 2020).
-This vulnerability is also known in the literature as "Assignment operator replacement", "Binary
-operator replacement", "Unary operator replacement or deletion" (Hartel and Schumi, 2020), or
-"SWC-129 Typographical Error" (SmartContractSecurity, 2020). </p> 
+This defect refers to single-digit errors made by programmers while typing source code, e.g., in logic or arithmetic operations. For example, for value assignment, a developer may type by mistake "+ =" instead of "=" or may use "−" instead of "+" or "−−" instead of "++" (Hartel and Schumi, 2020). This vulnerability is also known in the literature as "SWC-129 Typographical Error" (SmartContractSecurity, 2020). </p> 
 
+<p>This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of writing. If encountered, the compiler provides the following error message: "Error: Use of unary + is disallowed"</p>
 
-
-
-<h2>5. Incorrect Control Flow</h2>
+<h3>5.16 Wrong Logic</h3>
 <p>
-This category groups a set of vulnerabilities that, if exploited, cause changes in the control flow of
-the program.</p>
+  This vulnerability refers to when the developer makes a systematic logic mistake in the contract, leading repeatable executions to unexpected results. This vulnerability is also known in the literature as "Logic loopholes" (Ding et al., 2021).
+</p>
 
-<h3>5.1 Incorrect Sequencing of Behavior</h3>
-<p>
-This category gathers vulnerabilities that end up in a sequence of behaviors that are carried out in
-the wrong order, leading to unexpected results. </p>
+<h3>5.17 Wrong Moment for Token Generation</h3>
+ <p>
+   This vulnerability arises when the token generation process within the contract relies solely on the validity of the receiving address. As a result, malicious programmers can exploit this weakness to generate tokens arbitrarily, gaining the ability to manipulate the token price. This vulnerability is also known in the literature as "Generate Token After ICO" (Ma et al., 2023) </p> 
 
-<i>5.1.1 Incorrect Use of Event Blockchain variables for Time</i>
-<p>
-Contracts that rely on using block control information (i.e., timestamp, coinbase, number, diffi-
-culty, and gas limit) for sequential event control are vulnerable to tampering by the miner. This
-vulnerability is also known in the literature as "Block state dependence" (Kalra et al., 2018), "Time
-restrictions" (Argañaraz et al., 2020), "Blockchain effects time dependency" (Zhang et al., 2020),
-"Block State Dependency" (Choi et al., 2021), "Timestamp dependence" (Ma et al., 2022; Hu et al.,
-2023; Song Jingjing and He et al., 2019; Wang et al., 2021; Andesta et al., 2020; Akca et al., 2019;
-Feng et al., 2019; Luu et al., 2016; Nguyen et al., 2020; Ashraf et al., 2020; Chen et al., 2020; Jiang
-et al., 2018; Tikhomirov et al., 2018; Zhang et al., 2019), "Block number dependency" (Chen et al.,
-2020; Jiang et al., 2018), "BlockTimestamp" (Liao et al., 2019), "Time dependency" (Liao et al.,
-2019), "Race condition" (Ashouri, 2020) "Block No. Dependency" (Ashraf et al., 2020), "Block
-number dependency" (Nguyen et al., 2020), "Event-ordering (EO) bugs" (Kolluri et al., 2019) or
-"SWC-116: Block values as a proxy for time" (SmartContractSecurity, 2020).</p>
+ 
+<h2>6. Incorrect Control Flow</h2>
+<p>This category groups a set of vulnerabilities that, if exploited, cause changes in the control flow of the program.</p>
 
-<i>5.1.2 Incorrect Function Call Order</i>
-<p>
-This defect refers to the creation of public functions that expect to be called in a certain sequence,
-originating unanticipated results whenever clients do not follow the right call order (Mavridou
-Anastasia et al., 2018). This vulnerability is also known in the literature , "Transaction-ordering
-dependence" (Mavridou Anastasia et al., 2018) or "SWC-114: Transaction Order Dependence"
-(SmartContractSecurity, 2020).</p>
+<h3>6.1 Incorrect Sequencing of Behavior</h3>
+<p>This category gathers vulnerabilities that end up in a sequence of behaviors that are carried out in the wrong order, leading to unexpected results. </p>
 
-<i>5.1.3 Improper Locking</i>
-<p>
-This issue refers to the case where a contract assumes that all entities participating in a transaction
-must have the same credit balance before the contract operations can execute. If there are no
-adequate (e.g., wrong or even missing) locking mechanisms, an attacker can forcefully send credit to
-the other entity, which would cause the verification of the balance condition to never be met. Thus,
-the contract may become unusable or show unexpected behavior (or unexpected state changes).
-This vulnerability is also known in the literature as "IncorrectEquality" (Tsankov et al., 2018),
-"Balance equality" (Tikhomirov et al., 2018; Zhang et al., 2019), "Strict equality" (Lu et al., 2019),
-"Strict Check for Balance" (Chen et al., 2020), "Arbitrary sending of ether" (Feist et al., 2019) or
-"SWC-132: Unexpected Ether balance" (SmartContractSecurity, 2020).</p>
 
-<i>5.1.4 Transfer Pre-Condition Dependent on Transaction Order</i>
+<i>6.1.1 Incorrect Use of Event Blockchain variables for Time</i>
 <p>
-In the case of this vulnerability, the order in which transactions are executed influence a pre-
-condition that guards the execution of the transfer. This influence may erroneously result in, for
-instance, a transaction not being executed at all. This defect is known in the literature as TOD-
-Transfer (Tsankov et al., 2018), TOD (Bose et al., 2022) or Transaction Order Dependence (Smart-
-ContractSecurity, 2020).</p>
+Contracts that rely on using block control information (i.e., timestamp, coinbase, number, difficulty, and gas limit) for sequential event control are vulnerable to tampering by the miner. This vulnerability is also known in the literature as "block info dependency" (Chen et al., 2022), "block information dependency" (Li et al., 2022c), "block no. dependency" (Ashraf et al., 2020; Jiang et al., 2018), "block number dependency" (Chen et al., 2020; Nguyen et al., 2020), "block state dependence" (Kalra et al., 2018), "block state dependency"(Choi et al., 2021), "block Timestamp" (Zhang et al., 2022a), "event-ordering (EO) bugs" (Kolluri et al., 2019), "race condition" (Ashouri, 2020), "system timestamp" (Li et al., 2022b), "time dependency" (Ashizawa et al., 2021), "time dependence" (Yu et al., 2021), "time dep" (Zhang et al., 2022a), "timestamp dependency" (Chen et al., 2020; Hwang et al., 2022; Hu et al., 2023; Ashraf et al., 2020; Song et al., 2019; Ma et al., 2022; Akca et al., 2019; Jiang et al., 2018; Nguyen et al., 2020; Wang et al., 2021), "timestamp dependence" (Liu et al., 2021; Zhuang et al., 2020; Luu et al., 2016; Tikhomirov et al., 2018),
+"timestamp manipulation" (Liao et al., 2022), "timestamp" (Sun et al., 2023; Zeng et al., 2022; Tsankov et al., 2018), "block dependency"(Torres et al., 2021), "time-stamp expansion" (Gupta et al., 2022), "timestamp" (Li et al., 2022d), or "SWC-116: Block values as a proxy for time" (SmartContractSecurity, 2020).</p>
 
-<i>5.1.5 Transfer Amount Dependent on Transaction Order</i>
+
+<i>6.1.2 Incorrect Function Call Order</i>
 <p>
-This issue refers to the case where the value of the variable that stores or determines an amount
-of a digital asset (to be transferred) is modified before it is sent to the recipient due to transaction
-ordering within a block. The amount may be changed due to the effect of multiple transactions being
-grouped in a block and executed in a specific order having the effect of producing unexpected changes
-in the value being transferred. This vulnerability is also known in the literature as "TODAmount"
-(Tsankov et al., 2018) , "TOD" (Liao et al., 2019; Wang et al., 2021; Bose et al., 2022) or "SWC-114:
+This defect refers to the creation of public functions that expect to be called in a certain sequence, originating unanticipated results whenever clients do not follow the right call order (Mavridou Anastasia et al., 2018). This vulnerability is also known in the literature as "concurrency of program" (Li et al., 2022b), "the transaction ordering" (Gupta et al., 2022), "transaction ordering dependence (TOD)" (Zeng et al., 2022), "transaction order dependency" (Torres et al., 2021), or "SWC-114:
 Transaction Order Dependence" (SmartContractSecurity, 2020).</p>
 
-<i>5.1.6 Transfer Recipient Dependent on Transaction Order</i>
-<p>In the case of this defect, the transfer recipient is modified before the send event due to transaction
-ordering within a block. As an example, if the intended recipient address is stored as a storage
-variable and a transfer is to execute based on this address, there is a chance the address may be
-changed or overwritten by another transaction prior to the transfer. This vulnerability is also known
-in the literature as "TODReceiver" (Tsankov et al., 2018) , "Direct value transfer" (Krupp and
-Rossow, 2018), "Transaction order dependence" (Kalra et al., 2018; Hu et al., 2023), "Transaction-
-ordering dependence" (Song Jingjing and He et al., 2019; Grishchenko et al., 2018; Luu et al., 2016;
-Grieco et al., 2020), "TOD" (Bose et al., 2022) or "SWC-114: Transaction Order Dependence"
-(SmartContractSecurity, 2020).</p>
+<i>6.1.3 Improper Locking</i>
+<p>
+This issue refers to the case where a contract assumes that all entities participating in a transaction must have the same credit balance before the contract operations can execute. If there are no adequate (e.g., wrong or even missing) locking mechanisms, an attacker can forcefully send credit to the other entity, which would cause the verification of the balance condition never to be met. Thus, the contract may become unusable or show unexpected behavior (or unexpected state changes). This vulnerability is also known in the literature as "arbitrary sending of ether" (Feist et al., 2019), "balance equality" (Tikhomirov et al., 2018), "checking for strict balance equality" (Shakya et al., 2022) , "incorrect Equality" (Tsankov et al., 2018), "strict check for balance" (Chen et al., 2020), or "SWC-132: Unexpected Ether balance" (SmartContractSecurity, 2020).</p>
 
-<i>5.1.7 Exposed state variables</i>
-<p> This vulnerability refers to the case where a developer erroneously exposes a state variable, whose
-value may then be modified by an attacker so that this modification influences the execution of
-a certain contract operation. As an example, consider a contract that executes a credit transfer
-from one user to another and has a require statement for verifying that there is sufficient credit
-to conclude the operation. If the balance is stored as a public state variable, a malicious use could
-change its value so that the require is avoided allowing the user to run a transfer that exceeds
-the amount of credit actually held by the malicious user. This vulnerability is also known in the
-literature as "Vulnerable state" (Krupp and Rossow, 2018). </p>
+<i>6.1.4 Transfer Pre-Condition Dependent on Transaction Order</i>
+<p>
+In the case of this vulnerability, the order in which transactions are executed influences a pre-condition that guards the execution of the transfer. This influence may erroneously result in, for instance, a transaction not being executed at all. This defect is known in the literature as "front running" (Crincoli et al., 2022), TOD Transfer" (Tsankov et al., 2018), "TOD"(Sun et al., 2023; Zhang et al., 2022a; Fu et al., 2019; Bose et al., 2022), or "SWC-114: Transaction Order Dependence" (SmartContractSecurity, 2020).</p>
+
+<i>6.1.5 Transfer Amount Dependent on Transaction Order</i>
+<p> This issue refers to the case where the value of the variable that stores or determines an amount of a digital asset (to be transferred) is modified before it is sent to the recipient due to transaction ordering within a block. The amount may be changed due to the effect of multiple transactions being grouped in a block and executed in a specific order, producing unexpected changes in the value being transferred. This vulnerability is also known in the literature as "TOD Amount"(Tsankov et al., 2018), "TOD" (Bose et al., 2022; Wang et al., 2021), or "SWC-114: Transaction Order Dependence" (SmartContractSecurity, 2020).</p>
+
+<i>6.1.6 Transfer Recipient Dependent on Transaction Order</i>
+
+<p>In the case of this defect, the transfer recipient is modified before the send event due to transaction ordering within a block. For example, if the intended recipient address is stored as a storage variable and a transfer is to execute based on this address, there is a chance the address may be changed or overwritten by another transaction before the transfer. This vulnerability is also known in the literature as "direct value transfer" (Krupp and Rossow, 2018), "TOD Receiver" (Tsankov et al.,
+2018), "TOD" (Bose et al., 2022), "transaction order dependence (Kalra et al., 2018), "transaction order dependency" (Hu et al., 2023), "transaction-ordering dependence" (Luu et al., 2016), "transaction-ordering dependence" (Song et al., 2019), or "SWC-114: Transaction Order Dependence" (SmartContractSecurity, 2020).</p>
+
+<i>6.1.7 Exposed state variables</i>
+<p> This vulnerability refers to the case where a developer erroneously exposes a state variable, whose value may then be modified by an attacker so that this modification influences the execution of a certain contract operation. As an example, consider a contract that executes a credit transfer from one user to another and has a require statement for verifying that there is sufficient credit to conclude the operation. If the balance is stored as a public state variable, a malicious use could
+change its value so that the require is avoided, allowing the user to run a transfer that exceeds the amount of credit the malicious user holds. This vulnerability is also known in the literature as "reified object addresses"(Li et al., 2022b) or "vulnerable state"(Krupp and Rossow, 2018)</p>
+
+
+
+<i>6.1.8 Wrong Definition of Actions</i>
+
+EOSIO facilitates inter-contract communication through the use of inline actions and defer actions.
+When a smart contract invokes another contract using inline actions, all these actions are bundled
+together into a single transaction under the control of the caller. In contrast, defer actions will
+be executed in a separate transaction and cannot be reverted by the caller. In certain situations,
+attackers might exploit the ability to rollback inline actions, manipulating the blockchain to deny
+specific transactions. To mitigate such risks, developers can strategically implement defer actions to
+create a more secure contract execution flow, protecting against rollback attacks. This vulnerability
+is also known in the literature as "rollback" (Chen et al., 2022).
 
 <h3>5.2 Inadequate Input Validation</h3>
 <p>
