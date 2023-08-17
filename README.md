@@ -473,30 +473,20 @@ specific transactions. To mitigate such risks, developers can strategically impl
 create a more secure contract execution flow, protecting against rollback attacks. This vulnerability
 is also known in the literature as "rollback" (Chen et al., 2022).
 
-<h3>5.2 Inadequate Input Validation</h3>
+<h3>6.2 Inadequate Input Validation</h3>
 <p>
 This group refers to defects involving the inadequate validation of functional conditions, which are
 requirements that a contract must meet so that it can operate correctly. Such conditions may offer
 protection against certain types of attacks or force certain business rules to be followed.</p>
 
-<i>5.2.1 Improper Input Validation</i>
-<p> This type of problem occurs when an attacker calls a certain contract operation using invalid or
-malicious input data, capable of affecting the functioning of the contract due to the fact that either
-it does not validate the incoming inputs or validates them in an incorrect manner. For instance, in
-the context of Solidity, a Short Address Attack occurs when a contract receives less data than it
-was expecting, which leads the system to fill the missing bytes with zeros (Chen et al., 2020). As
-a consequence, the behavior may become unexpected if the code assumes that the input data will
-comply with a certain length or format. This vulnerability is also known in the literature as "Invalid
-input data" (Chen et al., 2020; Grieco et al., 2020), "Short address attack" (Ashouri, 2020), "Short
-address" (Feng et al., 2019), or "Avoid non-existing address" (Chang et al., 2019). </p>
+<i>6.2.1 Improper Input Validation</i>
+<p>This type of problem occurs when an attacker calls a certain contract operation using invalid or malicious input data, capable of affecting the functioning of the contract due to the fact that either it does not validate the incoming inputs or validates them in an incorrect manner. For instance, in the context of Solidity, a Short Address Attack occurs when a contract receives fewer data than expected, leading the system to fill the missing bytes with zeros (Chen et al., 2020). As a
+consequence, the behavior may become unexpected if the code assumes that the input data will comply with a certain length or format. This vulnerability is also known in the literature as "avoid non-existing address" (Chang et al., 2019), "invalid input data" (Chen et al., 2020), "short address attack" (Ashouri, 2020; Crincoli et al., 2022), "shortening of address" (Mavridou et al., 2019), "unchecked input arguments" (Li et al., 2022b), "unchecked tainted static call" (Brent et al., 2020), "has_short_address" (Xing et al., 2020), or "shift-parameter-mixup" (Li et al., 2022d)</p>
 
-<i>5.2.2 Extraneous Input Validation</i>
-<p> In this particular case, the functional conditions of the contract are too strong and do not allow
-certain behaviors (which would be valid) to occur, making the contract unable to meet the require-
-ments. This vulnerability is also known in the literature as "Requirement Violation" (Choi et al.,
-2021) or "SWC-123 Requirement violation" (SmartContractSecurity, 2020). </p>
+<i>6.2.2 Extraneous Input Validation</i>
+<p>In this particular case, the functional conditions of the contract are too strong and do not allow certain behaviors (which would be valid) to occur, making the contract unable to meet the requirements. This vulnerability is also known in the literature as "requirement violation" (Choi et al.,2021) or "SWC-123 Requirement violation" (SmartContractSecurity, 2020). </p>
 
-<h2>6. Arithmetic Issues</h2>
+<h2>7. Arithmetic Issues</h2>
 <p> This category groups different vulnerabilities that share the outcome of resulting in arithmetic
 problems. </p>
 
@@ -505,156 +495,89 @@ problems. </p>
 a value that is less than (or greater than) the minimum values (or maximum value) that a variable
 can hold, which produces a value different from the correct result. </p>
 
-<i>6.1.1 Integer Underflow</i>
-<p>This defect refers to operations over an Integer variable that result in a value that is less than the
-minimum value allowed by the Integer type. This vulnerability is also known in the literature as
-"Integer Bug" (Choi et al., 2021), "Integer underflow" (Stephens et al., 2021; Song Jingjing and He
-et al., 2019; Momeni et al., 2019; Wang et al., 2021; Kalra et al., 2018), "Integer overflow/underflow"
-(Wang et al., 2019; Lu et al., 2019; So et al., 2020), "Integer overflow and integer underflow" (Ayoade
-et al., 2019), "Arithmetic bugs" (Torres et al., 2018), "Underflow" (Liao et al., 2019), "Integer
-overflow and underflow" (Nguyen et al., 2020; Ashouri, 2020), "Overflow/Underflow" (Ma et al.,
-2022; Cui et al., 2022; Hu et al., 2023; Akca et al., 2019), "Arithmetic issues" (Andesta et al., 2020)
-or "SWC-101: Integer Overflow and Underflow" (SmartContractSecurity, 2020).</p>
+<i>7.1.1 Integer Underflow</i>
+<p>This defect refers to operations over an Integer variable that results in a value that is less than the minimum value allowed by the Integer type. This vulnerability is also known in the literature as "arithmetic bugs"(Torres et al., 2018), "flow" (Sun et al., 2023), "integer underflow vulnerability" (Song et al., 2019), "integer bug" (Choi et al., 2021), "integer over/underflow" (Sunbeom et al.,2021; Wang et al., 2019; So et al., 2020; Kalra et al., 2018), "integer underflow" (Ashizawa et al., 2021; Jin et al., 2023; Kalra et al., 2018; Stephens et al., 2021; Wang et al., 2021), "integer overflow and integer underflow" (Gupta et al., 2022; Ayoade et al., 2019; Ashouri, 2020; Nguyen et al., 2020), "overflow / underflow"(Cui et al., 2022; Ma et al., 2022; Akca et al., 2019),"overflow and underflow"(Hu et al., 2023), "underflow" (Zhang et al., 2022a; Zhou et al., 2022b), "has_flows" (Xing et al., 2020), "multi-transaction sequence vulnerabilities" (Zhang et al., 2022b), or "SWC-101: Integer Overflow and Underflow" (SmartContractSecurity, 2020).</p>
 
-<i>6.1.2 Integer Overflow</i>
-<p>This defect refers to operations over an Integer variable that results in a value that is larger than
-the maximum value allowed by the Integer type. This vulnerability is also known in the literature
-as "Integer Bug" (Choi et al., 2021), "Integer overflow" (Stephens et al., 2021; Wang et al., 2021;
-Kalra et al., 2018), "Integer overflow/underflow" (Ma et al., 2022; Cui et al., 2022; Hu et al., 2023;
-So et al., 2020; Wang et al., 2019), "Integer overflow and integer underflow" (Ayoade et al., 2019),
-"Integer overflows" (Grieco et al., 2020; Grech et al., 2020), "Arithmetic Bugs" (Torres et al.,
-2018), "Overflow detector" (Gao et al., 2019), "Overflow" (Liao et al., 2019), "Integer overflow
-and underflow" (Nguyen et al., 2020; Ashouri, 2020), "BatchOverflow" (Feng et al., 2019), "Over-
-flow/Underflow" (Akca et al., 2019), "Arithmetic issues" (Andesta et al., 2020), "Integer Overflow
-vulnerability" (Song Jingjing and He et al., 2019) or "SWC-101: Integer Overflow and Underflow"
-(SmartContractSecurity, 2020). </p>
+<i>7.1.2 Integer Overflow</i>
+<p>This defect refers to operations over an Integer variable that results in a value that is larger than the maximum value allowed by the Integer type. This vulnerability is also known in the literature as "arithmetic Bugs" (Torres et al., 2018), "flow" (Sun et al., 2023), "integer bug" (Choi et al., 2021), "integer over/underflow(Sunbeom et al., 2021; Wang et al., 2019), "integer overflow vulnerability" (Song et al., 2019), "integer overflow" (Grech et al., 2020; Fu et al., 2019; Ding et al., 2021; Ashizawa et al., 2021; Jin et al., 2023; Zhou et al., 2022b; Stephens et al., 2021; Wang et al., 2021), "integer overflow and integer underflow" (Gupta et al., 2022; Hu et al., 2023; Ayoade et al., 2019; Ashouri, 2020; Nguyen et al., 2020; So et al., 2020), "underflow" (Cui et al., 2022), "overflow/underflow" (Akca et al., 2019; Ma et al., 2022), "overflow detector" (Gao et al., 2019), "overflow" (Zhang et al., 2022a; Torres et al., 2021), "has_flows" (Xing et al., 2020), or "SWC-101: Integer Overflow and Underflow" (SmartContractSecurity, 2020) </p>
 
-<h3>6.2 Division Bugs</h3>
+<h3>7.2 Division Bugs</h3>
 <p>This category groups issues related to erroneous division operations.</p>
 
-<i>6.2.1 Divide by Zero</i>
-<p> This issue refers to the attempt of a program to divide a value by zero. This vulnerability is also
-known in the literature as "Division-by-zero" (So et al., 2020), "Arithmetic Bugs" (Torres et al.,
-2018), or "Division by zero" (Akca et al., 2019). </p>
+<i>7.2.1 Divide by Zero</i>
+<p>This issue refers to the attempt of a program to divide a value by zero. This vulnerability is also known in the literature as "arithmetic bugs" (Torres et al., 2018), "divide by zero" (Sunbeom et al., 2021), "divide-by-zero" (Pani et al., 2023), "division by zero" (Akca et al., 2019), "division-by-zero" (So et al., 2020), or "zero division risk" (Gupta et al., 2022). </p>
 
-<i>6.2.2 Integer Division</i>
-<p>At the time of writing, a smart contract mainstream language like Solidity does not support floating
-point or decimal types. Thus, the remainder of a division operation is always lost. Developers may
-use fixed-point arithmetic and external libraries to handle this kind of operation. This vulnerability
-is also known in the literature as "Numerical Precision Error" (Cui et al., 2022), "Integer division"
-(Tikhomirov et al., 2018) , "Using fixed point number type" (Zhang et al., 2019) or "SWC-101:
-Integer Overflow and Underflow" (SmartContractSecurity, 2020).</p>
+<i>7.2.2 Integer Division</i>
+<p>At the time of writing, a smart contract mainstream language like Solidity does not support floating point or decimal types. Thus, the remainder of a division operation is always lost. Developers may use fixed-point arithmetic and external libraries to handle this kind of operation. This vulnerability
+is also known in the literature as "integer division" (Tikhomirov et al., 2018), "numerical precision error" (Cui et al., 2022), or "SWC-101: Integer Overflow and Underflow" (SmartContractSecurity,2020).</p>
 
-<h3>6.3 Conversion Bugs</h3>
+<h3>7.3 Conversion Bugs</h3>
 <p> This category groups a set of vulnerabilities where there are issues related to the conversion between
 different datatypes.</p>
 
-<i>6.3.1 Truncation Bugs</i>
-<p> This vulnerability refers to the case where a variable declared in a certain type is converted to a
-smaller type, which means that data is lost during the conversion process. This vulnerability is also
-known in the literature as "Truncation bugs" (Torres et al., 2018) or "SWC-101: Integer Overflow
-and Underflow" (SmartContractSecurity, 2020). </p>
+<i>7.3.1 Truncation Bugs</i>
+<p>This vulnerability refers to the case where a variable declared in a certain type is converted to a smaller type, which means that data is lost during the conversion process. This vulnerability is also known in the literature as "truncation bugs" (Torres et al., 2018) or "SWC-101: Integer Overflow and Underflow" (SmartContractSecurity, 2020). </p>
 
 
-<i>6.3.2 Signedness Bugs</i>
-<p>The conversion of a signed integer type to an unsigned type of the same width may change a negative
-value to a positive one (the opposite may also happen) (Torres et al., 2018). This vulnerability is also
-known in the literature as "Signedness bugs" (Torres et al., 2018) or "SWC-101: Integer Overflow
-and Underflow" (SmartContractSecurity, 2020). </p>
+<i>7.3.2 Signedness Bugs</i>
+<p>The conversion of a signed integer type to an unsigned type of the same width may change a negative value to a positive one (the opposite may also happen) (Torres et al., 2018). This vulnerability is also known in the literature as "Signedness bugs" (Torres et al., 2018), or "SWC-101: Integer Overflow and Underflow" (SmartContractSecurity, 2020). </p>
 
-<h2>7. Improper Access Control</h2>
-<p> This category groups a set of vulnerabilities that are strongly related to authentication or access
-control. </p>
+<h2>8. Improper Access Control</h2>
+<p> This category groups a set of vulnerabilities that are strongly related to authentication or access control. </p>
 
-<h3>7.1 Incorrect Authentication or Authorization</h3>
-<p>The smart contract fails to properly identify a client or determine its privileges, resulting in wrong
-access privileges for that particular client.</p>
+<h3>8.1 Incorrect Authentication or Authorization</h3>
+<p>The smart contract fails to properly identify a client or determine its privileges, resulting in wrong access privileges for that particular client.</p>
 
-<i>7.1.1 Wrong Caller Identification</i>
-<p> In Solidity, tx.origin allows obtaining the address of the account that initiated a transaction
-and msg.sender allows obtaining the address of the contract that has called the function being
-executed. The use of the tx.origin for access control may be a way of opening an entry point to
-a malicious user. A malicious user may create a contract that calls the vulnerable function (i.e.,
-the one that uses tx.origin to check the identity of the caller). Thus, msg.sender will differ from
-tx.origin. In the case the vulnerable function uses tx.origin for access control, it will allow the
-user to perform actions it should not be able to. This vulnerability is also known in the literature
-as "Transaction Origin Use" (Choi et al., 2021), "Transaction state dependence" (Kalra et al.,
-2018), "Use of origin" (Brent et al., 2018), "TxOrigin" (Hu et al., 2023; Li et al., 2023; Akca et al.,
-2019; Liao et al., 2019; Tsankov et al., 2018), "Tx.origin for authentication" (Zhang et al., 2019),
-"Tx.origin" (Lu et al., 2019; Tikhomirov et al., 2018), "Incorrect Check for Authorization" (Chen
-et al., 2020), "Unprotected usage of tx.origin" (Momeni et al., 2019) or "SWC-115: Authorization
-through tx.origin" (SmartContractSecurity, 2020). </p>
+<i>8.1.1 Wrong Caller Identification</i>
+<p> In Solidity, tx.origin allows obtaining the address of the account that initiated a transaction and msg.sender allows obtaining the address of the contract that has called the function being executed. The use of the tx.origin for access control may be a way of opening an entry point
+to a malicious user. A malicious user may create a contract that calls the vulnerable function (i.e., the one that uses tx.origin to check the identity of the caller). Thus, msg.sender will differ from tx.origin. In the case the vulnerable function uses tx.origin for access control, it will allow the user to perform actions it should not be able to. This vulnerability is also known in the literature as "incorrect check for authorization" (Chen et al., 2020), "missing authorization verification" (Chen et al., 2022), "missing access control checks (MACC)" (Ghaleb et al., 2023), "the abuse of tx.origin" (Ye et al., 2022), "transaction origin use" (Choi et al., 2021), "transaction state dependence" (Kalra et al., 2018), "tx-origin" (Xue et al., 2022; Li et al., 2022d), Tx.origin (Hwang et al., 2022; Gupta et al., 2022; Tikhomirov et al., 2018; Sun et al., 2023; Hu et al., 2023; Zhang et al., 2022a; Akca et al., 2019; Tsankov et al., 2018), "use of tx.origin" (Zeng et al., 2022), "using tx.origin for authorization" (Shakya et al., 2022), or "SWC-115: Authorization through tx.origin" (SmartContractSecurity, 2020). </p>
 
-<i>7.1.2 Owner Manipulation</i>
-<p> This vulnerability allows an attacker to exploit some function or feature of the smart contract by
-manipulating the owner control variable. This allows the attacker to perform some kind of restricted
-operations (Zhang et al., 2020). This vulnerability is also known in the literature as "Missing Owner
-Check" (Cui et al., 2022), "Unprotected Function" (Stephens et al., 2021), "Vulnerable access
-control" (Zhang et al., 2020), "Access control" (Feng et al., 2019; Lu et al., 2019), or "Tainted
-owner variable" (Brent et al., 2020) </p>
+<i>8.1.2 Owner Manipulation</i>
+<p>This vulnerability allows an attacker to exploit some function or feature of the smart contract by manipulating the owner control variable. This allows the attacker to perform some kind of restricted operations (Zhang et al., 2020b). This vulnerability is also known in the literature as "freeze account" (Ma et al., 2023), "missing owner check" (Cui et al., 2022), "taint for owner" (Liao et al., 2022), "tainted owner variable" (Brent et al., 2020), "unprotected function" (Stephens et al., 2021), or "vulnerable access control" (Zhang et al., 2020b)</p>
 
 
-<i>7.1.3 Missing Verification for Program Termination</i>
-<p> This issue refers to the lack of a secure verification for terminating a published (deployed) con-
-tract, allowing an attacker to terminate it in an unauthorized manner. Selfdestruct is an EVM
-instruction that is able to nullify the bytecode of a deployed contract. When invoked, it stops the
-execution of the EVM, deletes the contract’s bytecode, and sends the remaining fund to a certain
-address. Access to this kind of function by non-authorized clients may result in security issues.
-This vulnerability is also known in the literature as "Suicidal Contract" (Choi et al., 2021), "Un-
-protected Suicide" (Hu et al., 2023), "Destroyable contract" (Brent et al., 2018), "SelfDestruct"
-(Liao et al., 2019), "Suicidal contracts" (Feist et al., 2019), "Guard suicide" (Chang et al., 2019),
-"Unprotected usage of selfdestruct" (Momeni et al., 2019), "Accessible selfdestruct" (Brent et al.,
-2020), "Tainted selfdestruct" (Brent et al., 2020) or "SWC-106: Unprotected SELFDESTRUCT
-Instruction" (SmartContractSecurity, 2020). </p>
+<i>8.1.3 Missing Verification for Program Termination</i>
+<p> This issue refers to the lack of a secure verification for terminating a published (deployed) contract, allowing an attacker to terminate it in an unauthorized manner. Selfdestruct is an EVM instruction that is able to nullify the bytecode of a deployed contract. When invoked, it stops the execution of the EVM, deletes the contract’s bytecode, and sends the remaining fund to a certain address. Access to this kind of function by non-authorized clients may result in security issues. This vulnerability is also known in the literature as "accessible self-destruct" (Brent et al., 2020), "destroy token" (Ma et al., 2023), "guard suicide" (Chang et al., 2019), "self-destruct abusing" (Ye et al., 2022), "self-destruct" (Zeng et al., 2022), "suicidal contract" (Choi et al., 2021), "suicidal contracts" (Feist et al., 2019), "tainted self-destruct" (Brent et al., 2020), "unprotected suicide" (Hu et al., 2023; Mavridou et al., 2019), "unrestricted Self-destruct" (Tsankov et al., 2018), "multi-transaction sequence vulnerabilities" (Zhang et al., 2022b), "suicide" (Fu et al., 2019), "unprotected self-destruct" (Torres et al., 2021), or "SWC-106: Unprotected SELFDESTRUCT Instruction" (SmartContractSecurity, 2020) </p>
 
-<h3>7.2 Improper Protection of Sensitive Data</h3>
+<h3>8.2 Improper Protection of Sensitive Data</h3>
 <p>  This category generally refers to the issues that result in the inability to protect sensitive information
 from non-authorized clients. </p>
 
-<i>7.2.1 Exposed Private Data</i>
-<p> This issue refers to the cases in which contracts store unencrypted sensitive data in public blockchain
-transactions. Solidity, like other programming languages, support the private keyword that indi-
-cates that data is only accessible within the contract itself. However, in blockchain environments,
-marking a variable with private does not make it fully invisible to the outside world. Miners, which
-are responsible for validating transactions on the blockchain, can view the code of the contract and
-the value of its state variables (Zhang et al., 2019). This vulnerability is also known in the litera-
-ture as "Keeping Secrets" (Argañaraz et al., 2020), "Exposed secret" (Zhang et al., 2020), "Private
-modifier" (Lu et al., 2019; Tikhomirov et al., 2018; Zhang et al., 2019) or "SWC-136: Unencrypted
-Private Data On-Chain" (SmartContractSecurity, 2020). </p>
+<i>8.2.1 Exposed Private Data</i>
+<p>This issue refers to the cases in which contracts store unencrypted sensitive data in public blockchain transactions. Solidity, like other programming languages, support the private keyword that indicates that data is only accessible within the contract itself. However, in blockchain environments, marking a variable with private does not make it fully invisible to the outside world. Miners, which are responsible for validating transactions on the blockchain, can view the code of the contract and the value of its state variables (Zhang et al., 2019). This vulnerability is also known in the literature as "exposed secret" (Zhang et al., 2020b), "private modifier" (Tikhomirov et al., 2018), "private-not-hidedata" (Li et al., 2022d), or "SWC-136: Unencrypted Private Data On-Chain" (SmartContractSecurity, 2020). </p>
 
-<i> 7.2.2 Dependency on External State Data (Unsolvable constraints of external critical state data) </i>
-<p> This vulnerability refers to the use of data that is not under control nor is generated by the contract
-(i.e., external critical state data). A malicious user may exploit this situation if such data determines
-the outcome of the execution of the contract. This vulnerability is also known in the literature as
-"Unsolvable constraints" (Zhang et al., 2020). </p>
 
-<h3> 7.3 Cryptography Misuse </h3>
+<i> 8.2.2 Dependency on External State Data (Unsolvable constraints of external critical state data) </i>
+<p> This vulnerability refers to the use of data that is not under control nor is generated by the contract (i.e., external critical state data). A malicious user may exploit this situation if such data determines the outcome of the execution of the contract. This vulnerability is also known in the literature as "Unsolvable constraints" (Zhang et al., 2020b) </p>
+
+<h3> 8.3 Cryptography Misuse </h3>
 <p> This category groups vulnerabilities that generally reflect misuse of cryptography mechanisms. </p>
 
-<i>7.3.1 Incorrect Verification of Cryptographic Signature</i>
+<i>8.3.1 Incorrect Verification of Cryptographic Signature</i>
 <p>
 This issue refers to the wrong verification of the authenticity and integrity of messages with the use
 of message signatures. As an example, a developer could develop a vulnerable contract that relies on
 a signature in a signed message hash for representing the earlier verification of previous messages.
 A client could generate a malicious message with a valid signature and include it in the hash. The
 contract then would validate the signature and update the hash, indicating that the message was
-processed. This vulnerability is also known in the literature as "Missing Key Check" (Cui et al.,
-2022), "SWC-117: Signature Malleability" (SmartContractSecurity, 2020). </p>
+processed. This vulnerability is also known in the literature as "check signature" (Nishida Yuki
+and Saito et al., 2021), "missing key check" (Cui et al., 2022), "signature-malleability" (Li et al.,
+2022d), or "SWC-117: Signature Malleability" (SmartContractSecurity, 2020). </p>
 
-<i>7.3.2 Improper Check against Signature Replay Attacks</i>
+<i>8.3.2 Improper Check against Signature Replay Attacks</i>
 <p>This defect refers to a situation where a malicious client is able to obtain the message hash of a
 legitimate transaction and is allowed to use the same signature to impersonate the legitimate client
 and execute fraudulent transactions. This vulnerability is also known in the literature as "SWC-121:
-Missing Protection against Signature Replay Attacks" (SmartContractSecurity, 2020). </p>
+Missing Protection against Signature Replay Attacks" (SmartContractSecurity, 2020) </p>
 
-<i>7.3.3 Improper Authenticity Check</i>
+<i>8.3.3 Improper Authenticity Check</i>
 <p> In this case, a contract may tolerate off-chain signed messages instead of waiting for an on-chain
 signature. This is usually done with the goal of improving performance but may come at the expense
 of compromising the authenticity of the message. This vulnerability is also known in the literature
 as "Missing Signer Check" (Cui et al., 2022), "SWC-122: Lack of proper signature verification"
-(SmartContractSecurity, 2020). </p>
+(SmartContractSecurity, 2020).. </p>
 
-<i>7.3.4. Incorrect Argument Encoding</i>
+<i>8.3.4. Incorrect Argument Encoding</i>
 <p> This defect refers to the misuse of one-way hash functions (i.e., Solidity keccak256) namely in
 the incorrect encoding of the function arguments, which can result in a higher likelihood of hash
 collisions for different entries. This vulnerability is also known in the literature as "Authorization"
