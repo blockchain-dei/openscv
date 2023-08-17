@@ -157,15 +157,8 @@ remaining gas. However, such differences have become a frequent source of proble
 
 <i>2.1.1 Improper Use of Exception Handling Functions</i>
 
-<p>Diverse run-time errors (e.g., out-of-gas error, data type overflow error, division by zero error, array-
-out-of-index error, etc.) may happen after a compiled smart contract is deployed. However, Solidity
-has many functions for error handling (e.g., throw, assert, require, revert), but their correct
-use relies on the experience and expertise of the developer. This defect occurs when the developer
-misuses the handling exception functions, which can lead the program to unexpected behavior. This
-vulnerability is also known in the literature as "exception disorder" (Jiang et al., 2018), "exception
-state" (Zhou et al., 2022b), "mishandled exceptions (Choi et al., 2021; Fu et al., 2019; Luu et al.,
-2016; Mavridou et al., 2019; Nguyen et al., 2020), "unexpected revert" (Ye et al., 2022), "unhandled
-errors" (Li et al., 2022b), "unhandled exception" (Ashouri, 2020; Torres et al., 2021), or "unhandled
+<p>Diverse run-time errors (e.g., out-of-gas error, data type overflow error, division by zero error, array-out-of-index error, etc.) may happen after a compiled smart contract is deployed. However, Solidity has many functions for error handling (e.g., throw, assert, require, revert), but their correct use relies on the experience and expertise of the developer. This defect occurs when the developer misuses the handling exception functions, which can lead the program to unexpected behavior. This
+vulnerability is also known in the literature as "exception disorder" (Jiang et al., 2018), "exception state" (Zhou et al., 2022b), "mishandled exceptions (Choi et al.,2021; Fu et al., 2019; Luu et al., 2016; Mavridou et al., 2019; Nguyen et al., 2020), "unexpected revert" (Ye et al., 2022), "unhandled errors" (Li et al., 2022b), "unhandled exception" (Ashouri, 2020; Torres et al., 2021), or "unhandled
 exception" (Tsankov et al., 2018).</p>
 
 <i>2.1.2 Improper Exception Handling in a Loop</i>
@@ -178,29 +171,21 @@ exception" (Tsankov et al., 2018).</p>
 
 <h3>2.2 Improper Token Exception Handling</h3>
 
-<p>The ERC-20 standard (Vogelsteller and Buterin, 2015) provides functionalities to exchange tokens.
-Besides describing the functionalities, the standard specifies good practices for developers to imple-
-ment its features. Regarding the transfer function, exceptional events can become problematic if
-handled improperly</p>
+<p>The ERC-20 standard (Vogelsteller and Buterin, 2015) provides functionalities to exchange tokens. Besides describing the functionalities, the standard specifies good practices for developers to implement its features. Regarding the transfer function, exceptional events can become problematic if handled improperly</p>
 
 <i>2.2.1 Missing Thrown Exception</i>
 
-<p>Regarding the transfer function (i.e., functionality to transfer tokens from one account to another),
-the ERC-20 standard recommends to the developer throw an exception when a condition of the
-caller’s account balance does not have enough tokens to spend. This allows the caller to understand
-the reason for which the transfer is not completed and take appropriate action. This vulnerability is
-also known in the literature as "Non-standard Implementation of Tokens" (Ji et al., 2020), Missing
-the Transfer Event (Chen et al., 2020).</p>
+<p>Regarding the transfer function (i.e., functionality to transfer tokens from one account to another), the ERC-20 standard recommends to the developer throw an exception when a condition of the caller’s account balance does not have enough tokens to spend. This allows the caller to understand the reason for which the transfer is not completed and take appropriate action. This vulnerability is also known in the literature as "ERC-20 transfer" (Ashizawa et al., 2021), "missing the transfer event" (Chen et al., 2020), or "non-standard implementation of tokens" (Ji et al., 2020).</p>
 
 <i>2.2.2 Extraneous Exception Handling</i>
 
 <p>This type of defect refers to the implementation of extra actions compared to what is recommended
-in a certain specification. The specification does not recommend actions like the use of guard
-functions (e.g., require or assert) in addition to throwing an exception in the case when there is
-no balance in the caller. The extra actions might be arbitrary and incompatible with the purpose
-of a transfer functionality (e.g., returning true or false to report the success of the execution).
-This vulnerability is also known in the literature as "Token API violation" (Zhang et al., 2019;
-Tikhomirov et al., 2018)</p>
+in a certain specification. The specification does not recommend actions like using guard functions
+(e.g., require or assert) in addition to throwing an exception when there is no balance in the caller.
+The extra actions might be arbitrary and incompatible with the purpose of a transfer functionality
+(e.g., returning true or false to report the success of the execution). This vulnerability is also known
+in the literature as "flawed back-end Verification of CEXes" (Ji et al., 2020), "infinite loop" (Liu
+et al., 2021; Zhuang et al., 2020), or "token API violation"(Tikhomirov et al., 2018).</p>
 
 <h2>3. Gas Depletion</h2>
 
@@ -209,29 +194,58 @@ the smart contract execution.</p>
 
 <h3>3.1 Improper Gas Requirements Checking</h3>
 
-<p>This defect represents missing or wrong checking of the prerequisites (i.e., in terms of gas) for
-executing a certain operation, causing unnecessary processing and use of memory resources. For
-cost management reasons, languages offer programmers several ways to deal with the cost of the
-executing a certain operation in a contract. For instance, for transferring credits, Solidity provides
-the functions transfer() and send(), which have a limit of 2300 gas units for each execution. An
-alternative is to build a custom transfer function, where the gas limit is defined by a variable (e.g.,
-address.call.value(ethAmount).gas(gasAmount)()). Despite having several ways of managing
-the program costs, it is challenging for programmers to predict which part of the code may fail. If
-an out-of-gas exception is triggered, the result may be unexpected behavior. This vulnerability is
-also known in the literature as "Send without Gas" (Argañaraz et al., 2020), "Gassless send" (Jiang
-et al., 2018; Ashraf et al., 2020; Nguyen et al., 2020; Feng et al., 2019; Wang et al., 2019; Chang
-et al., 2019; Chapman et al., 2019), "Gas Dos" (Stephens et al., 2021), "Out of gas" (Akca et al.,
-2019) or "SWC-126 Insufficient Gas Griefing" (SmartContractSecurity, 2020). </p>
+<p>This defect represents missing or wrong checking of the prerequisites (i.e., in terms of gas) for executing a certain operation, causing unnecessary processing and use of memory resources. For cost management reasons, languages offer programmers several ways to deal with the cost of executing a certain operation in a contract. For instance, for transferring credits, Solidity provides the functions transfer() and send(), which have a limit of 2300 gas units for each execution. An alternative is to build a custom transfer function, where the gas limit is defined by a variable (e.g., address.call.value(ethAmount).gas(gasAmount)()). Despite having several ways of managing the program costs, it is challenging for programmers to predict which part of the code may fail. If an out-of-gas exception is triggered, the result may be unexpected behavior. This vulnerability is also known in the literature as "extra gas consumption" (Shakya et al., 2022), "gas consumption" (Ashizawa et al., 2021), "gas Dos" (Stephens et al., 2021), "gas less send(Ashraf et al., 2020; Nguyen et al., 2020; Jiang et al., 2018; Wang et al., 2019), "opaque predicate" (Chen et al., 2021), "out of gas" (Akca et al., 2019), or "SWC-126 Insufficient Gas Griefing" (SmartContractSecurity, 2020) </p>
 
 <h3>3.2 Call with Hardcoded Gas Amount</h3>
 
-<p>This defect refers to the impossibility of adjusting the amount of gas used by a certain program after
+<p>This defect refers to the impossibility of adjusting the amount of gas a certain program uses after
 being deployed. This issue is related to the observation that certain transfer credit in real contracts
 was being deployed using a fixed amount of gas (i.e., 2300 gas). If the gas cost of EVM instructions
 changes during, for instance, a hard fork, previously deployed smart contracts will easily break.
 This vulnerability is also known in the literature as "SWC-134 Message call with hardcoded gas
 amount" (SmartContractSecurity, 2020).</p>
 
+<h2>4. Erroneous Credit Transfer</h2>
+
+<p>This category groups defects which are generally related to improper credit transfer operations</p>
+
+<h2>4.1 Improper Check on Transfer Credit</h2>
+<p>This defect refers to the absence of verification (or wrong verification) after a transfer event, which
+can lead to an erroneous vision of the correct balance of the account. Indeed, the balance of the
+account may not reflect the currency transferred in an exact manner, leading to potential errors
+and opening the door to security issues. This vulnerability is also known in the literature as "forged
+transfer notification" (Li et al., 2022c), "unchecked send" (Kalra et al., 2018; Akca et al., 2019;
+Stephens et al., 2021), or "including Fake EOS transfer" (Li et al., 2022c).
+This issue has been addressed in the latest Solidity compiler, version 0.8.20 at the time of writing.
+If encountered, the compiler provides the following informative warning message: "Warning: Failure
+condition of send ignored. Consider using transfer instead"</p>
+
+<h2>4.2 Unprotected Transfer Value</h2>
+<p>The transfer function uses a numeric variable for transfers and may be vulnerable if it does not protect or specify limits for the values. When attribute address.balance is used for identifying the amount to be transferred, it will result in transferring the total balance at once, which is a high-risk operation for the cases where the amount is high (Zhang et al., 2020b). This vulnerability is also known in the literature as "arbitrarily transfer" (Ma et al., 2023), "ETH transfer inside the loop" (Shakya et al., 2022), "ether leak" (Choi et al., 2021), "manipulated balance" (Hu et al.,2023), "multiple send" (Choi et al., 2021), "transfer forwards all gas" (Tikhomirov et al., 2018), "unchecked transfer value" (Zhang et al., 2020b), "unrestricted ether flow" (Tsankov et al., 2018), or "SWC-105 Unprotected Ether Withdrawal" (SmartContractSecurity, 2020)</p>
+
+
+<h2>4.3 Wrong use of Transfer Credit Function</h2>
+<p>Depending on the programming language, there are different ways to carry out credit transfer operations. In Solidity, transfer and send will both allow executing a credit transfer. However, in the case of a problem, transfer will abort the process with an exception, whereas send function will return false, and transaction execution is continued. An attacker may manipulate the send function and be able to continue executing a credit transfer operation without proper authorization. This vulnerability is also known in the literature as "failed send" (Kalra et al., 2018), "send instead of transfer" (Shakya et al., 2022; Tikhomirov et al., 2018)</p>
+
+<h2>4.4 Missing Token Issuer Verification</h2>
+<p>This vulnerability is related to EOSIO blockchain, in which the ‘transfer‘ function allows attackers
+to win the cryptocurrency without paying a ticket fee. This vulnerability is also known in the
+literature as "fake EOS" (Chen et al., 2022)</p>
+
+<h2>4.5 Missing Token Verification of Exchange</h2>
+<p>This vulnerability arises when an attacker can perform a fake deposit due to inadequate verification
+in the exchange implementation, specifically when unsafe usage of transfer or transferFrom
+functions is present. A potential solution for this issue involves adopting the safeTransferFrom
+function, which incorporates security checks before invoking the transferFrom, thereby mitigating
+the risk. This vulnerability is also known in the literature as "flawed token Verification of DEXes"
+(Ji et al., 2020)</p>
+
+<h2>4.6 Fake Notification</h2>
+<p>This vulnerability is related to the EOSIO blockchain, specifically in EOS notifications. The problem
+occurs when the attackers forward the notification from eosio.token to the victim and forge an EOS
+notification. This vulnerability is also known in the literature as "fake notification" (Chen et al.,
+2022) or "fake receipt" (He et al., 2021)</p>
+  
 <h2>4. Bad Programming Practices and Language Weaknesses</h2>
 
 <p>This category represents issues that are mostly related to bad programming practices (i.e., error-prone or insecure coding practices) and language weaknesses, which are mostly related to insufficient
