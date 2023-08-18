@@ -281,7 +281,7 @@ In Solidity, it is possible to specify a type for each function. Functions of ty
 <p>This issue has been addressed in the latest Solidity compiler, version 0.8.20, at the time of writing. If encountered, the compiler provides the following informative warning message: "Warning: Function state mutability can be restricted to pure"</p>
 
 
-<i>5.6.7 Non-Identifiable Order in Map Structure Iteration<i/>
+<i>5.6.7 Non-Identifiable Order in Map Structure Iteration</i>
 <p> In the Golang language, key-value pairs are not guaranteed to be unique when iterating through a Map structure. This potential lack of uniqueness can cause security issues, particularly if these uncertain values are present in operations that involve modifying the ledger. Such situations may lead to an inconsistent ledger state, which could compromise the ledger’s integrity and reliability. This vulnerability is also known in the literature as "map structure iteration" (Li et al., 2022b)</p>
 
 
