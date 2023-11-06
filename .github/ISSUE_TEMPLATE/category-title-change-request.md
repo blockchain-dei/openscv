@@ -3,7 +3,7 @@ name: Category Title Change Request
 about: 'Create a report about the title of the OpenSCV''s Category '
 title: Category OpenSCV Issue
 labels: ''
-assignees: naghmehivaki, nuno-laranjeiro, blockchain-dei
+assignees: blockchain-dei, naghmehivaki, nuno-laranjeiro
 
 ---
 
@@ -16,7 +16,7 @@ New [  ], Remove [  ],  Change [ x ]
 **Index of the Change**
 1.1 "Reentrancy"
 
-** Proposed Name**
+**Proposed Name**
 "Reentrancy"
 
 **Additional context**
