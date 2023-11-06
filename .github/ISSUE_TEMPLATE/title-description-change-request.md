@@ -1,9 +1,9 @@
 ---
-name: Category Description Change Request
-about: Create a report about the description of the OpenSCV's Category
-title: Description Category OpenSCV Issue
+name: Title Description Change Request
+about: Create a report about the title of the OpenSCV's Vulnerability
+title: ''
 labels: ''
-assignees: blockchain-dei, naghmehivaki, nuno-laranjeiro
+assignees: naghmehivaki, nuno-laranjeiro, blockchain-dei
 
 ---
 
