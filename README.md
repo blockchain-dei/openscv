@@ -1,7 +1,7 @@
 <h1 align="center">OpenSCV: An Open Hierarchical Taxonomy for Smart Contract Vulnerabilities</h1>
 
 
-OpenSCV is a taxonomy for smart contract vulnerabilities, proposed in: Vidal, F.R., Ivaki, N. & Laranjeiro, N. OpenSCV: an open hierarchical taxonomy for smart contract vulnerabilities. Empir Software Eng 29, 101 (2024). https://doi.org/10.1007/s10664-024-10446-8
+OpenSCV is a taxonomy for smart contract vulnerabilities, proposed in: Vidal, F.R., Ivaki, N. & Laranjeiro, N. OpenSCV: an open hierarchical taxonomy for smart contract vulnerabilities. Empirical Software Engineering 29, 101 (2024). https://doi.org/10.1007/s10664-024-10446-8
 
 <p>The taxonomy is visually available at https://openscv.dei.uc.pt and a summary is available in the next paragraphs. This repository also contains a dataset holding vulnerable and corrected versions of contracts, for each of the described vulnerabilities.</p>
 
